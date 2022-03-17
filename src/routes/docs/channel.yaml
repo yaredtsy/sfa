@@ -1,0 +1,198 @@
+openapi: 3.0.0
+
+tags:
+  - channel
+components:
+  schemas:
+    Channel:
+      type: object
+      properties:
+        channelName:
+          type: string
+        
+        
+      example:
+        channelName: 'Cafe'
+paths:
+  /api/v1.0/channels:
+    get:
+      summary: Gets all list of channels
+      description: Fetches all list of channels registered in the database
+      tags:
+        - channel
+      responses:
+        '200':
+          description: successful fetch
+          content:
+            application/json:
+              properties:
+                channel:
+                  type: array
+        '401':
+          description: Access Denied
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+
+    post: 
+      summary: fetch new channel data to db
+      description: used to fetch new channel data to db
+      tags:
+        - channel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Channel"
+      responses:
+        '201':
+          description: Sccessful fetch 
+          content:
+            application/json:
+              properties:
+                channel:
+                  type: array 
+        '400':
+          description: BAD DATA
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+
+  /api/v1.0/channels/{id}:
+    get:
+      summary: Fetch a specific channel 
+      description: Fetch a specific channel relative to the specified id
+      tags:
+        - channel
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the channel
+      responses:
+        '200':
+          description: Successfuly loaded
+          content:
+            application/json:
+              properties:
+                channel:
+                  type: object
+        '400':
+          descriprion: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: channel Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    patch:
+      summary: Edit channel
+      description: Edit channel relative to user
+      tags:
+        - channel
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of the channel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Channel'
+      responses:
+        '200':
+          description: Successfuly Edited channel
+          content:
+            application/json:
+              properties:
+                channel:
+                  type: object
+        '400':
+          description: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: channel Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    delete:
+      summary: Delete channel
+      description: soft delete channel from db
+      tags:
+        - channel
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of channel
+      responses:
+        '200':
+          description: channel with the id is deleted successfully
+          content:
+            application/json:
+              msg:  
+                type: string
+        '404':
+          description: channel with the specified id is not found
+          content:
+            application/json:
+              msg:  
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:  
+                type: string
+

@@ -1,0 +1,220 @@
+openapi: 3.0.0
+
+tags:
+  - routeMarket
+components:
+  schemas:
+    RouteMarket:
+      type: object
+      properties:
+        route_id:
+          type: integer
+        truck_id:
+          type: integer
+        monday:
+          descripition: optional
+          type: string
+        tuesday:
+          descripition: optional
+          type: string
+        wednesday:
+          descripition: optional
+          type: string
+        thursday:
+          descripition: optional
+          type: string
+        friday:
+          descripition: optional
+          type: string
+        saturday:
+          descripition: optional
+          type: string
+        toDate:
+          type: Date
+        fromDate:
+          type: Date
+        
+        
+paths:
+  /api/v1.0/route-markets:
+    get:
+      summary: Gets all list of routeMarkets
+      description: Fetches all list of routeMarkets registered in the database
+      tags:
+        - routeMarket
+      responses:
+        '200':
+          description: successful fetch
+          content:
+            application/json:
+              properties:
+                routeMarket:
+                  type: array
+        '401':
+          description: Access Denied
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+
+    post: 
+      summary: fetch new routeMarket data to db
+      description: used to fetch new routeMarket data to db
+      tags:
+        - routeMarket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteMarket"
+      responses:
+        '201':
+          description: Sccessful fetch 
+          content:
+            application/json:
+              properties:
+                routeMarket:
+                  type: array 
+        '400':
+          description: BAD DATA
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+
+  /api/v1.0/route-markets/{id}:
+    get:
+      summary: Fetch a specific routeMarket 
+      description: Fetch a specific routeMarket relative to the specified id
+      tags:
+        - routeMarket
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the routeMarket
+      responses:
+        '200':
+          description: Successfuly loaded
+          content:
+            application/json:
+              properties:
+                routeMarket:
+                  type: object
+        '400':
+          descriprion: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: routeMarket Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    patch:
+      summary: Edit routeMarket
+      description: Edit routeMarket relative to user
+      tags:
+        - routeMarket
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of the routeMarket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteMarket'
+      responses:
+        '200':
+          description: Successfuly Edited routeMarket
+          content:
+            application/json:
+              properties:
+                routeMarket:
+                  type: object
+        '400':
+          description: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: routeMarket Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    delete:
+      summary: Delete routeMarket
+      description: soft delete routeMarket from db
+      tags:
+        - routeMarket
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of routeMarket
+      responses:
+        '200':
+          description: routeMarket with the id is deleted successfully
+          content:
+            application/json:
+              msg:  
+                type: string
+        '404':
+          description: routeMarket with the specified id is not found
+          content:
+            application/json:
+              msg:  
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:  
+                type: string
+

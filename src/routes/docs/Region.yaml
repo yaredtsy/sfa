@@ -1,0 +1,202 @@
+openapi: 3.0.0
+
+tags:
+  - region
+components:
+  schemas:
+    Region:
+      type: object
+      properties:
+        company_id:
+          type: integer
+        regionCode:
+          type: string
+        regionName:
+          type: string
+      example:
+        company_id: 1
+        regionCode: AA
+        regionName: Addis Ababa
+
+paths:
+  /api/v1.0/regions:
+    get:
+      summary: Gets all list of regions
+      description: Fetches all list of regions registered in the database
+      tags:
+        - region
+      responses:
+        '200':
+          description: successful fetch
+          content:
+            application/json:
+              properties:
+                region:
+                  type: array
+        '401':
+          description: Access Denied
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+
+    post: 
+      summary: fetch new region data to db
+      description: used to fetch new region data to db
+      tags:
+        - region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Region"
+      responses:
+        '201':
+          description: Sccessful fetch 
+          content:
+            application/json:
+              properties:
+                region:
+                  type: array 
+        '400':
+          description: BAD DATA
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+
+  /api/v1.0/regions/{id}:
+    get:
+      summary: Fetch a specific region 
+      description: Fetch a specific region relative to the specified id
+      tags:
+        - region
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the region
+      responses:
+        '200':
+          description: Successfuly loaded
+          content:
+            application/json:
+              properties:
+                region:
+                  type: object
+        '400':
+          descriprion: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: region Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    patch:
+      summary: Edit region
+      description: Edit region relative to user
+      tags:
+        - region
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of the region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          description: Successfuly Edited region
+          content:
+            application/json:
+              properties:
+                region:
+                  type: object
+        '400':
+          description: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: region Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    delete:
+      summary: Delete region
+      description: soft delete Company from db
+      tags:
+        - region
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of region
+      responses:
+        '200':
+          description: region with the id is deleted successfully
+          content:
+            application/json:
+              msg:  
+                type: string
+        '404':
+          description: region with the specified id is not found
+          content:
+            application/json:
+              msg:  
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:  
+                type: string

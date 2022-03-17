@@ -1,0 +1,224 @@
+openapi: 3.0.0
+
+tags:
+  - outlet
+components:
+  schemas:
+    Outlet:
+      type: object
+      properties:
+        company_id:
+          type: integer
+        city_id:
+          type: integer
+        outletName:
+          type: string
+        ownerName:
+          type: string
+        phoneNumber:
+          type: string
+        vatNumber:
+          type: string
+        geoLat:
+          type: string
+        geoLong:
+          type: string
+        channel_id:
+          type: integer
+        route_id:
+          type: integer
+      example:
+        company_id: 1
+        city_id: 1
+        outletName: "Shemsu Suk"
+        ownerName: "Shemsu"
+        phoneNumber: "9123145666"
+        vatNumber: "123ffrf"
+        geoLat: "3.4"
+        geoLong: "1.03"
+        channel_id: 1
+        route_id: 1
+
+paths:
+  /api/v1.0/outlets:
+    get:
+      summary: Gets all list of outlets
+      description: Fetches all list of outlets registered in the database
+      tags:
+        - outlet
+      responses:
+        '200':
+          description: successful fetch
+          content:
+            application/json:
+              properties:
+                outlet:
+                  type: array
+        '401':
+          description: Access Denied
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+
+    post: 
+      summary: fetch new outlet data to db
+      description: used to fetch new outlet data to db
+      tags:
+        - outlet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Outlet"
+      responses:
+        '201':
+          description: Sccessful fetch 
+          content:
+            application/json:
+              properties:
+                outlet:
+                  type: object 
+        '400':
+          description: BAD DATA
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string 
+
+  /api/v1.0/outlets/{id}:
+    get:
+      summary: Fetch a specific outlet 
+      description: Fetch a specific outlet relative to the specified id
+      tags:
+        - outlet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the outlet
+      responses:
+        '200':
+          description: Successfuly loaded
+          content:
+            application/json:
+              properties:
+                outlet:
+                  type: object
+        '400':
+          descriprion: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: outlet Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    patch:
+      summary: Edit outlet
+      description: Edit outlet relative to user
+      tags:
+        - outlet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of the outlet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Outlet'
+      responses:
+        '200':
+          description: Successfuly Edited outlet
+          content:
+            application/json:
+              properties:
+                outlet:
+                  type: object
+        '400':
+          description: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '404':
+          description: outlet Not Found
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+    delete:
+      summary: Delete outlet
+      description: soft delete outlet from db
+      tags:
+        - outlet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Numeric identifier of outlet
+      responses:
+        '200':
+          description: outlet with the id is deleted successfully
+          content:
+            application/json:
+              msg:  
+                type: string
+        '404':
+          description: outlets with the specified id is not found
+          content:
+            application/json:
+              msg:  
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:  
+                type: string
+

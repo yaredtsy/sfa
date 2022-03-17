@@ -1,0 +1,43 @@
+POST http://localhost:4000/api/v1.0/nations
+Content-Type: application/json
+
+{
+    "nationCode": "ET",
+    "nationName": "Ethiopia",
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzX2NvbnRyb2wiOjEsImNyZWF0ZWREYXRlIjoiMjAyMS0xMi0yN1QxMDoxODozMS4zOTlaIiwibGFzdE1vZGlmaWVkIjoiMjAyMS0xMi0yN1QxMDoxODozMS4zOTlaIiwiZmlyc3ROYW1lIjoiR2VvcmdlIiwibWlkZGxlTmFtZSI6IlNtaXRoIiwibGFzdE5hbWUiOiJMdWNhcyIsImVtYWlsIjoiakBqLmNvbSIsInBob25lTnVtYmVyIjoiMDkxMjM0MzU2NzAiLCJyb2xlIjoxLCJhZGRyZXNzIjoic29tZSBsb2NhdGlvbiIsInBvc2l0aW9uIjoicG9zaXRpb24iLCJwYXNzd29yZCI6IiQyYiQxMCRoQURRdlhyLnNBV3o3ZUI0UDhtdDhPYkJwQVdGaWJMcjF2R3VleVd2bEhvRGhCVlh6Y2xZNiJ9.Hvq-gxgSBStrkNOJmZSJszZbI28QZ5mn0gR2SUxqEiE"
+}
+
+###
+GET http://localhost:4000/api/v1.0/nations
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzX2NvbnRyb2wiOjAsImNyZWF0ZWREYXRlIjoiMjAyMS0xMi0xN1QwODowMDoxMS4yMzlaIiwibGFzdE1vZGlmaWVkIjoiMjAyMS0xMi0yMFQxMDoyMTo1MS4zNDVaIiwiZmlyc3ROYW1lIjoic3RyaW5nIiwibWlkZGxlTmFtZSI6IlVwZGF0ZWQiLCJsYXN0TmFtZSI6InN0cmluZyIsImVtYWlsIjoiakBqLmNvbSIsInBob25lTnVtYmVyIjoic3RyaW5nIiwicm9sZSI6MSwiYWRkcmVzcyI6InN0cmluZyIsInBvc2l0aW9uIjoiMTIzYWJjIiwicGFzc3dvcmQiOiIkMmIkMTAkWHQ3WE9LMG9ibmZYUUN4YnpHZDlNdVIzV2ZWSWk5RDV4V2tpc1NjUEM3SVNmckw5ZEo0RG0ifQ._1ifoa66yNK91o0gh7d8shOkPj7uCLByniThm0ZCVdk"
+}
+
+###
+POST http://localhost:3000/api/v1.0/users/forget-password
+Content-Type: application/json
+
+{
+    "email": "j@j.com"
+}
+
+### 
+POST http://localhost:3000/api/v1.0/users/login
+Content-Type: application/json
+
+{
+    "email": "test@email.com",
+    "password": "123abc"
+}
+
+###
+PATCH http://localhost:3000/api/v1.0/nations/1
+Content-Type: application/json
+
+{
+    "nationCode": "ET",
+    "nationName": "Ethiopia",
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzX2NvbnRyb2wiOjAsImNyZWF0ZWREYXRlIjoiMjAyMS0xMi0xNlQxMzoxOTozMS4xNDFaIiwibGFzdE1vZGlmaWVkIjoiMjAyMS0xMi0xNlQxMzoxOTozMS41OTNaIiwiZmlyc3ROYW1lIjoidF9mbmFtZSIsIm1pZGRsZU5hbWUiOiJ0X21uYW1lIiwibGFzdE5hbWUiOiJ0X2xuYW1lIiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDkxMjM0NTA3OCIsInJvbGUiOjEsImFkZHJlc3MiOiJ0ZXN0IGFkZHJlc3MiLCJwb3NpdGlvbiI6InRlc3QgcG9zaXRpb24iLCJwYXNzd29yZCI6IiQyYiQxMCRITjY5M3guaHVMQUxGU3lVbDBBbFRPellSWHFSR1o1U2pXR1RJdmM3UzUydThYOHpJMnlJQyJ9.iRAQA_WZ6-vvAsAnWibbNijEnB4NBF1isZJm6xaizQc"
+}

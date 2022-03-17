@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  server:
+    build: .
+    ports:
+      - '9000:9000'
+  db:
+    image: 'postgres'
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_PASSWORD: 'SFA_DB_123'
+      POSTGRES_USER: 'sfa'
+    volumes:
+      - data:/var/lib/postgresql/data
+volumes:
+  data: 

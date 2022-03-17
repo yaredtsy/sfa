@@ -1,0 +1,251 @@
+openapi: 3.0.0
+tags:
+  - user
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+        middleName: 
+          type: string
+        lastName: 
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        role:
+          type: integer
+        address:
+          type: string
+        position:
+          type: string
+        password:
+          type: string
+      example:
+        firstName: John
+        middleName: W
+        lastName: Smith
+        email: j@j.com
+        phoneNumber: "0912345678"
+        role: 1
+        address: Bole
+        position: CSR
+        password: 123abc
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: j@j.com 
+        password: 123abc
+
+paths: 
+  /api/v1.0/users:
+    get:
+      summary: returns all list of users
+      description: this returns all list of users from the DB
+      responses:
+        '200':
+          description: Successful fetch
+          content: 
+            application/json: 
+              properties: 
+                allUsers:
+                  type: array
+        '500':
+          description: Internal Server Error
+          content: 
+            application/json:
+              properties:
+                msg:
+                  type: string
+      tags:
+        - user
+    post:
+      summary: POST user
+      description: This route accepts user data from user and fetch to DB
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User successfuly created
+          content:
+            application/json:
+              msg:
+                type: string
+              user:
+                type: object
+        '409':
+          description: email or phone number already existed
+          content:
+            application/json:
+              msg:
+                type: string
+
+        '400':
+          description: All fields are required, make sure you don't have null values
+          content:
+            application/json:
+              msg:
+                type: string
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:
+                type: string
+
+  /api/v1.0/users/{id}:
+    get:
+      summary: Return a specific user related to the id
+      description: This route returns a user object that relates to the id submitted
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the user to get
+      responses:
+        '200':
+          description: Successful fetch
+          content:
+            application/json:
+              properties:
+                user:
+                 type: array
+        '404':
+          description: User not found
+          content:
+            application/json:
+              msg:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:
+                type: string
+    patch:
+      summary: route to edit user
+      descriptions: this route will allow you to edit user details
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the user to get
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: user detail edited successfully
+          content:
+            application/json:
+              user:
+                type: array
+              msg:
+                type: string
+        '400':
+          description: you should atleast pass one attribute
+          content: 
+            application/json:
+              msg:
+                type: string
+        '404':
+          description: user by the specified id is not found
+          content:
+            application/json:
+              msg:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:
+                type: string
+    delete:
+      summary: route to delete user
+      descriptions: this route will allow you to soft delete a user
+      tags: 
+        - user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the user to get
+      responses:
+        '200':
+          description: user with the id is deleted successfully
+          content:
+            application/json:
+              msg:  
+                type: string
+        '404':
+          description: user with the specified id is not found
+          content:
+            application/json:
+              msg:  
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              msg:  
+                type: string
+    
+  /api/v1.0/users/login:
+    post: 
+      summary: Login route
+      description: Login route
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Successful Login
+          content:
+            application/json:
+              properties:
+                token:
+                  type: string
+        '400':
+          description: Bad Data
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              properties:
+                msg:
+                  type: string

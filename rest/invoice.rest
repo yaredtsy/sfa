@@ -1,0 +1,32 @@
+POST http://localhost:4000/api/v1.0/invoices/
+Content-Type: application/json
+
+{
+    "outletName": "Test Outlet",
+            "company_id": 1,
+            "route_id": 1,
+            "truck_id": 1,
+            "outlet_id": 1,
+            "material_id": 1,
+            "quantity": 30,
+            "token" : "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzX2NvbnRyb2wiOjAsImNyZWF0ZWREYXRlIjoiMjAyMS0xMi0zMFQxMTowMToyNC4zMzdaIiwibGFzdE1vZGlmaWVkIjoiMjAyMS0xMi0zMFQxMTowMjoyNS41ODlaIiwiZmlyc3ROYW1lIjoiR2VvcmdlIiwibWlkZGxlTmFtZSI6IlVwZGF0ZWQiLCJsYXN0TmFtZSI6Ikx1Y2FzIiwiZW1haWwiOiJqQGouY29tIiwicGhvbmVOdW1iZXIiOiIwOTEyMzQzNTY3MCIsInJvbGUiOjEsImFkZHJlc3MiOiJzb21lIGxvY2F0aW9uIiwicG9zaXRpb24iOiJwb3NpdGlvbiIsInBhc3N3b3JkIjoiJDJiJDEwJEZrTXMvSkZHd0tpaUQyTmlZWlFhMGVKNVgzYUFJUXJzY3pmWjhTTWtmV21pM0gxQXZYejF5In0.KE_BzxPAq9xe8y9rCBSVjN_eP8p6hmnMdm_KaVXaeFg"
+}
+
+
+###
+GET http://localhost:4000/api/v1.0/invoices/
+Content-Type: application/json
+
+{
+    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzX2NvbnRyb2wiOjAsImNyZWF0ZWREYXRlIjoiMjAyMS0xMi0zMFQxMTowMToyNC4zMzdaIiwibGFzdE1vZGlmaWVkIjoiMjAyMS0xMi0zMFQxMTowMjoyNS41ODlaIiwiZmlyc3ROYW1lIjoiR2VvcmdlIiwibWlkZGxlTmFtZSI6IlVwZGF0ZWQiLCJsYXN0TmFtZSI6Ikx1Y2FzIiwiZW1haWwiOiJqQGouY29tIiwicGhvbmVOdW1iZXIiOiIwOTEyMzQzNTY3MCIsInJvbGUiOjEsImFkZHJlc3MiOiJzb21lIGxvY2F0aW9uIiwicG9zaXRpb24iOiJwb3NpdGlvbiIsInBhc3N3b3JkIjoiJDJiJDEwJEZrTXMvSkZHd0tpaUQyTmlZWlFhMGVKNVgzYUFJUXJzY3pmWjhTTWtmV21pM0gxQXZYejF5In0.KE_BzxPAq9xe8y9rCBSVjN_eP8p6hmnMdm_KaVXaeFg"
+
+}
+
+### 
+GET http://localhost:4000/api/v1.0/outlets/pages/1
+Content-Type: application/json
+
+{
+    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic3RhdHVzX2NvbnRyb2wiOjAsImNyZWF0ZWREYXRlIjoiMjAyMS0xMi0zMFQxMTowMToyNC4zMzdaIiwibGFzdE1vZGlmaWVkIjoiMjAyMS0xMi0zMFQxMTowMjoyNS41ODlaIiwiZmlyc3ROYW1lIjoiR2VvcmdlIiwibWlkZGxlTmFtZSI6IlVwZGF0ZWQiLCJsYXN0TmFtZSI6Ikx1Y2FzIiwiZW1haWwiOiJqQGouY29tIiwicGhvbmVOdW1iZXIiOiIwOTEyMzQzNTY3MCIsInJvbGUiOjEsImFkZHJlc3MiOiJzb21lIGxvY2F0aW9uIiwicG9zaXRpb24iOiJwb3NpdGlvbiIsInBhc3N3b3JkIjoiJDJiJDEwJEZrTXMvSkZHd0tpaUQyTmlZWlFhMGVKNVgzYUFJUXJzY3pmWjhTTWtmV21pM0gxQXZYejF5In0.KE_BzxPAq9xe8y9rCBSVjN_eP8p6hmnMdm_KaVXaeFg"
+
+}

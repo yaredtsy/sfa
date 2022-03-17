@@ -1,0 +1,57 @@
+GET http://localhost:3000/api/v1.0/users/
+
+###
+GET http://localhost:3000/api/v1.0/users/8
+
+### 
+POST http://localhost:3000/api/v1.0/users/
+Content-Type: application/json
+
+{
+    "firstName": "George",
+      "middleName": "Smith",
+      "lastName": "Lucas",
+      "email": "j@j.com",
+      "phoneNumber": "09123435670",
+      "role": 1,
+      "address": "some location",
+      "position": "position",
+      "password": "123abc"
+}
+
+### 
+POST http://localhost:4000/api/v1.0/users/
+Content-Type: application/json
+
+{
+    "firstName": "George",
+      "middleName": "Smith",
+      "lastName": "Lucas",
+      "email": "j@j.com",
+      "phoneNumber": "09123435670",
+      "role": 1,
+      "address": "some location",
+      "position": "position",
+      "password": "123abc"
+}
+
+###
+PATCH http://localhost:3000/api/v1.0/users/1
+Content-Type: application/json
+
+{
+    "firstName": "Admin"
+}
+
+### 
+POST http://localhost:4000/api/v1.0/users/login
+Content-Type: application/json
+
+{
+    "email" : "j@j.com",
+    "password": "123abc"
+}
+
+
+### 
+DELETE http://localhost:3000/api/v1.0/users/7
