@@ -1,8 +1,9 @@
 import { response } from "express";
 import supertest from "supertest";
 import app from "../app";
+
 const request = supertest(app);
-let url = "/api/v1.0/regions";
+const url = "/api/v1.0/regions";
 
 let token;
 
@@ -41,7 +42,7 @@ describe("Region Route", () => {
 
   describe("Region GET ONE", () => {
     const resp = () => {
-      return request.get(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.get(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 200 OK, on valid id", async () => {
       const response = await resp();
@@ -55,7 +56,7 @@ describe("Region Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .get(url + "/0")
+        .get(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
@@ -69,17 +70,17 @@ describe("Region Route", () => {
   describe("Region PUT", () => {
     const resp = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
           company_id: 1,
           regionCode: "AA",
-          regionName: "Addis Ababa"
+          regionName: "Addis Ababa",
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const badData = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({})
         .set("Authorization", `Bearer ${token}`);
     };
@@ -100,13 +101,13 @@ describe("Region Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .patch(url + "/0")
+        .patch(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, access denied", async () => {
-      const response = await request.patch(url + "/1").send({
+      const response = await request.patch(`${url}/1`).send({
         nationCode: "UT",
         nationName: "UPdated Test",
       });
@@ -116,7 +117,7 @@ describe("Region Route", () => {
 
   describe("Region DELETE ID", () => {
     const resp = () => {
-      return request.delete(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.delete(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 202", async () => {
       const response = await resp();
@@ -130,13 +131,13 @@ describe("Region Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .delete(url + "/0")
+        .delete(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, ACESS DENIED", async () => {
-      const response = await request.delete(url + "/1");
+      const response = await request.delete(`${url}/1`);
       expect(response.status).toBe(401);
     });
   });
@@ -149,22 +150,18 @@ describe("Region Route", () => {
           company_id: 1,
           regionCode: "AA",
           regionName: "Addis Ababa",
-          
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const postInvalid = () => {
-      return request
-        .post(url)
-        .send({})
-        .set("Authorization", `Bearer ${token}`);
+      return request.post(url).send({}).set("Authorization", `Bearer ${token}`);
     };
     const postWithoutToken = () => {
       return request.post(url).send({
         nation_id: 1,
-          city: "Addis Ababa",
-          address: "test Address",
-          numberOfAgents: 70
+        city: "Addis Ababa",
+        address: "test Address",
+        numberOfAgents: 70,
       });
     };
 

@@ -5,7 +5,6 @@ import { Nation } from "../entity/Nation";
 import { User } from "../entity/User";
 import isAuthenticated from "../Middleware/isAuthenticated";
 
-
 const router = Router();
 // for test purpose
 const conn = createConnection().then((con) => {
@@ -15,13 +14,13 @@ const conn = createConnection().then((con) => {
 
 // CREATE/POST
 router.post("/", isAuthenticated, async (req: any, res) => {
-  let { nation_id, city, subCity, specificArea } = req.body;
-  if (!(nation_id && city && subCity && specificArea )) {
+  const { nation_id, city, subCity, specificArea } = req.body;
+  if (!(nation_id && city && subCity && specificArea)) {
     return res.status(400).json({
       msg: "Please insert Data properly and make sure all fields are filled",
     });
   }
-  
+
   try {
     const repo = (await conn).getRepository(City);
     const repo2 = (await conn).getRepository(User);
@@ -63,7 +62,7 @@ router.get("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(City);
-    const city = await repo.find({ where: { id: id } });
+    const city = await repo.find({ where: { id } });
     if (!city || Object.keys(city).length === 0) {
       return res.status(404).json({ city, msg: "not Found" });
     }
@@ -81,13 +80,13 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
   try {
     const repo = (await conn).getRepository(City);
     const repo2 = (await conn).getRepository(Nation);
-    let city = await repo.find({ where: { id: id } });
+    const city = await repo.find({ where: { id } });
     if (!city || Object.keys(city).length === 0) {
       return res.status(404).json({ city, msg: "not Found" });
     }
-    if (!(nation_id || cc || specificArea || status_control || subCity )) {
+    if (!(nation_id || cc || specificArea || status_control || subCity)) {
       return res.status(400).json({ msg: "no DATA", body: req.body });
-    }   
+    }
 
     const nation = await repo2.findOne({ where: { id: nation_id } });
     if (!nation || Object.keys(nation).length == 0) {
@@ -98,7 +97,7 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
     city[0].subCity = subCity || city[0].subCity;
     city[0].specificArea = specificArea || city[0].specificArea;
     city[0].status_control = status_control || city[0].status_control;
-    
+
     await city[0].save();
     res.status(200).json({ city: city[0], msg: "Successfully updated" });
   } catch (err) {
@@ -111,7 +110,7 @@ router.delete("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(City);
-    let city = await repo.find({ where: { id: id } });
+    const city = await repo.find({ where: { id } });
     if (!city || Object.keys(city).length === 0) {
       return res.status(404).json({ city, msg: "not Found" });
     }

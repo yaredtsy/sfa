@@ -1,8 +1,9 @@
 import { response } from "express";
 import supertest from "supertest";
 import app from "../app";
+
 const request = supertest(app);
-let url = "/api/v1.0/invoices";
+const url = "/api/v1.0/invoices";
 
 let token;
 
@@ -41,7 +42,7 @@ describe("Invoice Route", () => {
 
   describe("Invoice GET ONE", () => {
     const resp = () => {
-      return request.get(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.get(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 200 OK, on valid id", async () => {
       const response = await resp();
@@ -55,7 +56,7 @@ describe("Invoice Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .get(url + "/0")
+        .get(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
@@ -69,23 +70,23 @@ describe("Invoice Route", () => {
   describe("Invoice PUT", () => {
     const resp = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
-          quantity: 40
+          quantity: 40,
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const badCompanyid = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
-          company_id: 0
+          company_id: 0,
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const badData = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({})
         .set("Authorization", `Bearer ${token}`);
     };
@@ -104,27 +105,27 @@ describe("Invoice Route", () => {
       expect(response.status).toBe(400);
     });
 
-    it("should return 400 BAD DATA, on invalid company_id", async()=>{
+    it("should return 400 BAD DATA, on invalid company_id", async () => {
       const response = await badCompanyid();
       expect(response.status).toBe(400);
-    })
+    });
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .patch(url + "/0")
+        .patch(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, access denied", async () => {
-      const response = await request.patch(url + "/1").send({});
+      const response = await request.patch(`${url}/1`).send({});
       expect(response.status).toBe(401);
     });
   });
 
   describe("Invoice DELETE ID", () => {
     const resp = () => {
-      return request.delete(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.delete(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 202", async () => {
       const response = await resp();
@@ -138,13 +139,13 @@ describe("Invoice Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .delete(url + "/0")
+        .delete(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, ACESS DENIED", async () => {
-      const response = await request.delete(url + "/1");
+      const response = await request.delete(`${url}/1`);
       expect(response.status).toBe(401);
     });
   });
@@ -154,13 +155,13 @@ describe("Invoice Route", () => {
       return request
         .post(url)
         .send({
-            outletName: 'Test Outlet',
-            company_id: 1,
-            route_id: 1,
-            truck_id: 1,
-            outlet_id: 1,
-            material_id: 1,
-            quantity: 30,
+          outletName: "Test Outlet",
+          company_id: 1,
+          route_id: 1,
+          truck_id: 1,
+          outlet_id: 1,
+          material_id: 1,
+          quantity: 30,
         })
         .set("Authorization", `Bearer ${token}`);
     };

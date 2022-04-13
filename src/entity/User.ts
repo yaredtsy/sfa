@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, OneToMany} from "typeorm";
+import { Entity, Column, OneToMany } from "typeorm";
 import { Nation } from "./Nation";
-import AbstractModel from './AbstractModel'
+import AbstractModel from "./AbstractModel";
 import { Company } from "./Company";
 import { Region } from "./Region";
 import { Territory } from "./Territory";
@@ -16,75 +16,73 @@ import { Invoice } from "./Invoice";
 
 @Entity("user_detail")
 export class User extends AbstractModel {
+  @Column()
+  firstName: string;
 
+  @Column()
+  middleName: string;
 
-    @Column()
-    firstName: string;
+  @Column()
+  lastName: string;
 
-    @Column()
-    middleName: string;
+  @Column({
+    unique: true,
+  })
+  email: string;
 
-    @Column()
-    lastName: string;
+  @Column({
+    unique: true,
+  })
+  phoneNumber: string;
 
-    @Column({
-        unique: true
-    })
-    email: string;
+  @Column()
+  role: number;
 
-    @Column({
-        unique: true
-    })
-    phoneNumber: string;
+  @Column()
+  address: string;
 
-    @Column()
-    role: number;
+  @Column()
+  position: string;
 
-    @Column()
-    address: string;
+  @Column()
+  password: string;
 
-    @Column()
-    position: string;
+  @OneToMany(() => Nation, (nation) => nation.created_by)
+  nations: Nation[];
 
-    @Column()
-    password: string;
+  @OneToMany(() => Company, (company) => company.created_by)
+  companies: Company[];
 
-    @OneToMany(()=> Nation, nation=> nation.created_by)
-    nations: Nation[]
+  @OneToMany(() => Region, (region) => region.created_by)
+  regions: Region[];
 
-    @OneToMany(()=> Company, company=> company.created_by)
-    companies: Company[]
+  @OneToMany(() => Territory, (territory) => territory.created_by)
+  territories: Territory[];
 
-    @OneToMany(()=> Region, region=> region.created_by)
-    regions: Region[]
+  @OneToMany(() => Truck, (truck) => truck.created_by)
+  trucks: Truck[];
 
-    @OneToMany(()=> Territory, territory=> territory.created_by)
-    territories: Territory[]
+  @OneToMany(() => Route, (route) => route.created_by)
+  routes: Route[];
 
-    @OneToMany(()=> Truck, truck=> truck.created_by)
-    trucks: Truck[]
+  @OneToMany(() => Outlet, (outlet) => outlet.created_by)
+  outlets: Outlet[];
 
-    @OneToMany(()=> Route, route=> route.created_by)
-    routes: Route[]
+  @OneToMany(() => City, (city) => city.created_by)
+  cities: City[];
 
-    @OneToMany(()=> Outlet, outlet=> outlet.created_by)
-    outlets: Outlet[]
+  @OneToMany(() => Material, (material) => material.created_by)
+  materials: Material[];
 
-    @OneToMany(()=> City, city=> city.created_by)
-    cities: City[]
+  @OneToMany(() => Channel, (channel) => channel.created_by)
+  channels: Channel[];
 
-    @OneToMany(()=> Material, material=> material.created_by)
-    materials: Material[]
+  @OneToMany(() => Agent, (agent) => agent.created_by)
+  agents: Agent[];
 
-    @OneToMany(()=> Channel, channel=> channel.created_by)
-    channels: Channel[]
+  @OneToMany(() => RouteMarket, (rm) => rm.created_by)
+  routeMarkets: RouteMarket[];
 
-    @OneToMany(()=> Agent, agent=> agent.created_by)
-    agents: Agent[]
-
-    @OneToMany(()=> RouteMarket, rm => rm.created_by)
-    routeMarkets: RouteMarket[]
-
-    @OneToMany(()=> Invoice, invoice => invoice.created_by)
-    invoices: Invoice[]
+  @OneToMany(() => Invoice, (invoice) => invoice.created_by)
+  invoices: Invoice[];
 }

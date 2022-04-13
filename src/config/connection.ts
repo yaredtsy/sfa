@@ -1,18 +1,18 @@
-import {createConnection, getConnection} from 'typeorm';
+import { createConnection, getConnection } from "typeorm";
 
 const connection = {
-  async create(){
+  async create() {
     // const con = await createConnection();
     const con = await createConnection();
     await con.runMigrations();
     return con;
   },
 
-  async close(){
-    await getConnection().close(); 
+  async close() {
+    await getConnection().close();
   },
 
-  async clear(){
+  async clear() {
     const connection = getConnection();
     const entities = connection.entityMetadatas;
 
@@ -21,9 +21,6 @@ const connection = {
       await repository.query(`DELETE FROM ${entity.tableName}`);
     });
   },
-
-  
 };
-
 
 export default connection;

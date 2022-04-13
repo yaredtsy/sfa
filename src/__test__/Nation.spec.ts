@@ -1,8 +1,9 @@
 import { response } from "express";
 import supertest from "supertest";
 import app from "../app";
+
 const request = supertest(app);
-let url = "/api/v1.0/nations";
+const url = "/api/v1.0/nations";
 
 let token;
 
@@ -41,7 +42,7 @@ describe("Nation Route", () => {
 
   describe("Nation GET ONE", () => {
     const resp = () => {
-      return request.get(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.get(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 200 OK, on valid id", async () => {
       const response = await resp();
@@ -55,7 +56,7 @@ describe("Nation Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .get(url + "/0")
+        .get(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
@@ -69,7 +70,7 @@ describe("Nation Route", () => {
   describe("Nation PUT", () => {
     const resp = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
           nationCode: "UT",
           nationName: "Updated Test",
@@ -78,13 +79,13 @@ describe("Nation Route", () => {
     };
     const emptyObj = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({})
         .set("Authorization", `Bearer ${token}`);
     };
     const badData = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
           nationCode: "UTE",
           nationName: "UPdated Test",
@@ -101,10 +102,10 @@ describe("Nation Route", () => {
       expect(response.body).toMatchObject({});
     });
 
-    it("should return 400 BAD DATA, when empty objeect is sent", async() => {
+    it("should return 400 BAD DATA, when empty objeect is sent", async () => {
       const response = await emptyObj();
       expect(response.status).toBe(400);
-    })
+    });
 
     it("should return 400 BAD DATA, on bad data", async () => {
       const response = await badData();
@@ -113,13 +114,13 @@ describe("Nation Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .patch(url + "/0")
+        .patch(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, access denied", async () => {
-      const response = await request.patch(url + "/1").send({
+      const response = await request.patch(`${url}/1`).send({
         nationCode: "UT",
         nationName: "UPdated Test",
       });
@@ -129,7 +130,7 @@ describe("Nation Route", () => {
 
   describe("DELETE ID", () => {
     const resp = () => {
-      return request.delete(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.delete(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 202", async () => {
       const response = await resp();
@@ -143,13 +144,13 @@ describe("Nation Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .delete(url + "/0")
+        .delete(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, ACESS DENIED", async () => {
-      const response = await request.delete(url + "/1");
+      const response = await request.delete(`${url}/1`);
       expect(response.status).toBe(401);
     });
   });
@@ -165,10 +166,7 @@ describe("Nation Route", () => {
         .set("Authorization", `Bearer ${token}`);
     };
     const emptyObj = () => {
-      return request
-        .post(url)
-        .send({})
-        .set("Authorization", `Bearer ${token}`);
+      return request.post(url).send({}).set("Authorization", `Bearer ${token}`);
     };
     const postInvalid = () => {
       return request
@@ -196,10 +194,10 @@ describe("Nation Route", () => {
       expect(response.status).toBe(400);
     });
 
-    it("it shoudl return 400 BAD DATA, on empty object", async ()=> {
+    it("it shoudl return 400 BAD DATA, on empty object", async () => {
       const response = await emptyObj();
       expect(response.status).toBe(400);
-    })
+    });
 
     it("should return 401 ACCESS DENIED", async () => {
       const response = await postWithoutToken();

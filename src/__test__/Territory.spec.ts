@@ -1,10 +1,11 @@
 import { response } from "express";
 import supertest from "supertest";
 import app from "../app";
-const request = supertest(app);
-let url = "/api/v1.0/territories";
 
-let token;
+const request = supertest(app);
+const url = "/api/v1.0/territories";
+
+let token:string;
 
 beforeAll(async () => {
   const valid = () => {
@@ -41,7 +42,7 @@ describe("Territory Route", () => {
 
   describe("Territory GET ONE", () => {
     const resp = () => {
-      return request.get(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.get(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 200 OK, on valid id", async () => {
       const response = await resp();
@@ -55,7 +56,7 @@ describe("Territory Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .get(url + "/0")
+        .get(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
@@ -69,17 +70,17 @@ describe("Territory Route", () => {
   describe("Territory PUT", () => {
     const resp = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
           region_id: 1,
           territoryCode: "BDR",
-          territoryName: "Bahir Dar"
+          territoryName: "Bahir Dar",
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const badData = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({})
         .set("Authorization", `Bearer ${token}`);
     };
@@ -100,20 +101,20 @@ describe("Territory Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .patch(url + "/0")
+        .patch(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, access denied", async () => {
-      const response = await request.patch(url + "/1").send({});
+      const response = await request.patch(`${url}/1`).send({});
       expect(response.status).toBe(401);
     });
   });
 
   describe("Territory DELETE ID", () => {
     const resp = () => {
-      return request.delete(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.delete(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 202", async () => {
       const response = await resp();
@@ -127,13 +128,13 @@ describe("Territory Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .delete(url + "/0")
+        .delete(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, ACESS DENIED", async () => {
-      const response = await request.delete(url + "/1");
+      const response = await request.delete(`${url}/1`);
       expect(response.status).toBe(401);
     });
   });

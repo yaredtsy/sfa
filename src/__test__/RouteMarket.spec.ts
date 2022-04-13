@@ -1,8 +1,9 @@
 import { response } from "express";
 import supertest from "supertest";
 import app from "../app";
+
 const request = supertest(app);
-let url = "/api/v1.0/route-markets";
+const url = "/api/v1.0/route-markets";
 
 let token;
 
@@ -41,7 +42,7 @@ describe("RouteMarket Route", () => {
 
   describe("RouteMarket GET ONE", () => {
     const resp = () => {
-      return request.get(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.get(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 200 OK, on valid id", async () => {
       const response = await resp();
@@ -55,7 +56,7 @@ describe("RouteMarket Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .get(url + "/0")
+        .get(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
@@ -69,23 +70,23 @@ describe("RouteMarket Route", () => {
   describe("RouteMarket PUT", () => {
     const resp = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
-          monday: true
+          monday: true,
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const badCompanyid = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({
-          company_id: 0
+          company_id: 0,
         })
         .set("Authorization", `Bearer ${token}`);
     };
     const badData = () => {
       return request
-        .patch(url + "/1")
+        .patch(`${url}/1`)
         .send({})
         .set("Authorization", `Bearer ${token}`);
     };
@@ -104,27 +105,27 @@ describe("RouteMarket Route", () => {
       expect(response.status).toBe(400);
     });
 
-    it("should return 400 BAD DATA, on invalid company_id", async()=>{
+    it("should return 400 BAD DATA, on invalid company_id", async () => {
       const response = await badCompanyid();
       expect(response.status).toBe(400);
-    })
+    });
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .patch(url + "/0")
+        .patch(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, access denied", async () => {
-      const response = await request.patch(url + "/1").send({});
+      const response = await request.patch(`${url}/1`).send({});
       expect(response.status).toBe(401);
     });
   });
 
   describe("RouteMarket DELETE ID", () => {
     const resp = () => {
-      return request.delete(url + "/1").set("Authorization", `Bearer ${token}`);
+      return request.delete(`${url}/1`).set("Authorization", `Bearer ${token}`);
     };
     it("should return 202", async () => {
       const response = await resp();
@@ -138,34 +139,34 @@ describe("RouteMarket Route", () => {
 
     it("should return 404 NOT FOUND, on bad id", async () => {
       const response = await request
-        .delete(url + "/0")
+        .delete(`${url}/0`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
 
     it("should return 401, ACESS DENIED", async () => {
-      const response = await request.delete(url + "/1");
+      const response = await request.delete(`${url}/1`);
       expect(response.status).toBe(401);
     });
   });
 
   describe("RouteMarket POST", () => {
-      let date = new Date();
+    const date = new Date();
     //   date.setMonth(date.getMonth() + 6);
     const postValid = () => {
       return request
         .post(url)
         .send({
-            monday: false,
-            tuesday: false,
-            wednesday: false,
-            thursday: false,
-            friday: false,
-            saturday: false,
-            fromDate: new Date().getDate(),
-            toDate: date,
-            truck_id: 1,
-            route_id: 1
+          monday: false,
+          tuesday: false,
+          wednesday: false,
+          thursday: false,
+          friday: false,
+          saturday: false,
+          fromDate: new Date().getDate(),
+          toDate: date,
+          truck_id: 1,
+          route_id: 1,
         })
         .set("Authorization", `Bearer ${token}`);
     };

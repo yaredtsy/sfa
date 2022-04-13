@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { Invoice } from "../entity/Invoice";
 import { createConnection, QueryRunner } from "typeorm";
+import { Invoice } from "../entity/Invoice";
 import { Company } from "../entity/Company";
 import { User } from "../entity/User";
 import isAuthenticated from "../Middleware/isAuthenticated";
@@ -19,11 +19,24 @@ const conn = createConnection().then((con) => {
 
 // CREATE/POST
 router.post("/", isAuthenticated, async (req: any, res) => {
-  let {
-    outletName, company_id, truck_id, route_id, outlet_id, material_id, quantity
+  const {
+    outletName,
+    company_id,
+    truck_id,
+    route_id,
+    outlet_id,
+    material_id,
+    quantity,
   } = req.body;
   if (
-    !(outletName && company_id && truck_id && route_id && material_id && quantity )
+    !(
+      outletName &&
+      company_id &&
+      truck_id &&
+      route_id &&
+      material_id &&
+      quantity
+    )
   ) {
     return res.status(400).json({
       msg: "Please insert Data properly and make sure all fields are filled",
@@ -36,11 +49,23 @@ router.post("/", isAuthenticated, async (req: any, res) => {
     const userid = Number(req.user.id);
     const user = await repo2.findOne({ where: { id: userid } });
 
-    const company = await (await conn).getRepository(Company).findOne({where: {id: company_id}})
-    const truck = await (await conn).getRepository(Truck).findOne({where: {id: truck_id}})
-    const route = await (await conn).getRepository(Route).findOne({where: {id: route_id}})
-    const material = await (await conn).getRepository(Material).findOne({where: {id: material_id}})
-    const outlet = (outlet_id ? await(await conn).getRepository(Outlet).findOne({where: {id: outlet_id}}) : null)
+    const company = await (await conn)
+      .getRepository(Company)
+      .findOne({ where: { id: company_id } });
+    const truck = await (await conn)
+      .getRepository(Truck)
+      .findOne({ where: { id: truck_id } });
+    const route = await (await conn)
+      .getRepository(Route)
+      .findOne({ where: { id: route_id } });
+    const material = await (await conn)
+      .getRepository(Material)
+      .findOne({ where: { id: material_id } });
+    const outlet = outlet_id
+      ? await (await conn)
+          .getRepository(Outlet)
+          .findOne({ where: { id: outlet_id } })
+      : null;
     const totalPrice = Number(quantity) * Number(material.unitPrice);
     const newInvoice = repo.create({
       created_by: user,
@@ -51,7 +76,7 @@ router.post("/", isAuthenticated, async (req: any, res) => {
       material_id: material,
       outlet_id: outlet,
       totalPrice,
-      quantity
+      quantity,
     });
     await newInvoice.save();
 
@@ -59,7 +84,7 @@ router.post("/", isAuthenticated, async (req: any, res) => {
       .status(201)
       .json({ msg: "new invoice created", invoice: newInvoice });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 });
@@ -71,9 +96,7 @@ router.get("/", isAuthenticated, async (req, res) => {
     const query = (await conn).createQueryRunner();
     const invoices = await repo.find();
     if (invoices.length == 0) {
-      return res
-        .status(200)
-        .json({ msg: "Invoice table is Empty", invoices });
+      return res.status(200).json({ msg: "Invoice table is Empty", invoices });
     }
     res.status(200).json({ msg: "success", invoice: invoices });
   } catch (err) {
@@ -84,16 +107,16 @@ router.get("/", isAuthenticated, async (req, res) => {
 // GET by page number
 router.get("/pages/:pageNumber", isAuthenticated, async (req, res) => {
   const pageNumber = Number(req.params.pageNumber);
-  let pageSize = 20;
+  const pageSize = 20;
   try {
-    const raw = await (await conn).manager.query("SELECT * FROM invoice ")
-    let offset = (pageNumber - 1) * pageSize;
-    let sql = `
+    const raw = await (await conn).manager.query("SELECT * FROM invoice ");
+    const offset = (pageNumber - 1) * pageSize;
+    const sql = `
       SELECT * FROM invoice 
       ORDER BY id
       OFFSET ${offset} ROWS 
       FETCH NEXT ${pageSize} ROWS ONLY
-    `
+    `;
     const invoices = await (await conn).manager.query(sql);
     res.status(200).json({ msg: "success", invoice: invoices });
   } catch (err) {
@@ -106,7 +129,7 @@ router.get("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Invoice);
-    const invoice = await repo.find({ where: { id: id } });
+    const invoice = await repo.find({ where: { id } });
     if (!invoice || Object.keys(invoice).length === 0) {
       return res.status(404).json({ invoice, msg: "not Found" });
     }
@@ -119,33 +142,23 @@ router.get("/:id", isAuthenticated, async (req, res) => {
 // PATCH
 router.patch("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
-  const {
-    quantity,
-    status_control,
-  } = req.body;
+  const { quantity, status_control } = req.body;
   try {
     const repo = (await conn).getRepository(Invoice);
-    
-    let invoice = await repo.find({ where: { id: id } });
+
+    const invoice = await repo.find({ where: { id } });
     if (!invoice || Object.keys(invoice).length === 0) {
       return res.status(404).json({ invoice, msg: "not Found" });
     }
-    if (
-      !(
-        quantity ||
-        status_control
-      )
-    ) {
+    if (!(quantity || status_control)) {
       return res.status(400).json({ msg: "no DATA", body: req.body });
     }
-    
+
     invoice[0].quantity = quantity || invoice[0].quantity;
     invoice[0].status_control = status_control || invoice[0].status_control;
 
     await invoice[0].save();
-    res
-      .status(200)
-      .json({ invoice: invoice[0], msg: "Successfully updated" });
+    res.status(200).json({ invoice: invoice[0], msg: "Successfully updated" });
   } catch (err) {
     res.status(500).json({ msg: "Internal Server error", err });
   }
@@ -156,7 +169,7 @@ router.delete("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Invoice);
-    let invoice = await repo.find({ where: { id: id } });
+    const invoice = await repo.find({ where: { id } });
     if (!invoice || Object.keys(invoice).length === 0) {
       return res.status(404).json({ invoice, msg: "not Found" });
     }

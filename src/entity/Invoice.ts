@@ -1,6 +1,17 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, ManyToMany, ManyToOne, UpdateDateColumn, OneToMany, JoinTable} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  CreateDateColumn,
+  ManyToMany,
+  ManyToOne,
+  UpdateDateColumn,
+  OneToMany,
+  JoinTable,
+} from "typeorm";
 import { User } from "./User";
-import AbstractModel from './AbstractModel'
+import AbstractModel from "./AbstractModel";
 import { Territory } from "./Territory";
 import { Truck } from "./Truck";
 import { Nation } from "./Nation";
@@ -12,33 +23,30 @@ import { Route } from "./Route";
 
 @Entity("invoice")
 export class Invoice extends AbstractModel {
+  @Column()
+  outletName: string;
 
-    @Column()
-    outletName: string
+  @Column()
+  quantity: number;
 
-    @Column()
-    quantity: number
+  @Column()
+  totalPrice: number;
 
-    @Column()
-    totalPrice: number
+  @ManyToOne(() => Company, (company) => company.invoices)
+  company_id: Company;
 
-    @ManyToOne(()=> Company, company=> company.invoices)
-    company_id: Company
+  @ManyToOne(() => Truck, (truck) => truck.invoices)
+  truck_id: Truck;
 
-    @ManyToOne(()=> Truck, truck=>truck.invoices)
-    truck_id: Truck
+  @ManyToOne(() => Route, (route) => route.invoices)
+  route_id: Route;
 
-    @ManyToOne(()=> Route, route=>route.invoices)
-    route_id: Route
+  @ManyToOne(() => Outlet, (outlet) => outlet.invoices, { nullable: true })
+  outlet_id: Outlet;
 
-    @ManyToOne(()=> Outlet, outlet=> outlet.invoices, {nullable: true})
-    outlet_id: Outlet
-    
-    @ManyToOne(()=> Material, material => material.invoices)
-    material_id: Material
+  @ManyToOne(() => Material, (material) => material.invoices)
+  material_id: Material;
 
-    @ManyToOne(()=> User, user => user.invoices)
-    created_by: User
-
-
+  @ManyToOne(() => User, (user) => user.invoices)
+  created_by: User;
 }

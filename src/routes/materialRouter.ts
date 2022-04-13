@@ -21,23 +21,10 @@ const conn = createConnection().then((con) => {
 
 // CREATE/POST
 router.post("/", isAuthenticated, async (req: any, res) => {
-  let {
-    comapny_id,
-    brandType,
-    brandName,
-    unitPrice,
-    description,
-    sku
-  } = req.body;
+  const { comapny_id, brandType, brandName, unitPrice, description, sku } =
+    req.body;
   if (
-    !(
-      comapny_id &&
-      brandType &&
-      brandName &&
-      unitPrice &&
-      description &&
-      sku
-    )
+    !(comapny_id && brandType && brandName && unitPrice && description && sku)
   ) {
     return res.status(400).json({
       msg: "Please insert Data properly and make sure all fields are filled",
@@ -58,16 +45,17 @@ router.post("/", isAuthenticated, async (req: any, res) => {
       unitPrice,
       description,
       sku,
-      company_id: company
+      company_id: company,
     });
     await newMaterial.save();
 
-    return res.status(201).json({ msg: "new material created", material: newMaterial });
+    return res
+      .status(201)
+      .json({ msg: "new material created", material: newMaterial });
   } catch (err) {
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 });
-
 
 // GET ALL
 router.get("/", isAuthenticated, async (req, res) => {
@@ -75,7 +63,9 @@ router.get("/", isAuthenticated, async (req, res) => {
     const repo = (await conn).getRepository(Material);
     const materials = await repo.find();
     if (materials.length == 0) {
-      return res.status(200).json({ msg: "Material table is Empty", materials });
+      return res
+        .status(200)
+        .json({ msg: "Material table is Empty", materials });
     }
     res.status(200).json({ msg: "success", material: materials });
   } catch (err) {
@@ -88,7 +78,7 @@ router.get("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Material);
-    const material = await repo.find({ where: { id: id } });
+    const material = await repo.find({ where: { id } });
     if (!material || Object.keys(material).length === 0) {
       return res.status(404).json({ material, msg: "not Found" });
     }
@@ -113,7 +103,7 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
   try {
     const repo = (await conn).getRepository(Material);
     const repo2 = (await conn).getRepository(Company);
-    let material = await repo.find({ where: { id: id } });
+    const material = await repo.find({ where: { id } });
     if (!material || Object.keys(material).length === 0) {
       return res.status(404).json({ material, msg: "not Found" });
     }
@@ -131,7 +121,7 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
       return res.status(400).json({ msg: "no DATA", body: req.body });
     }
     let company = null;
-    
+
     if (company_id) {
       company = await repo2.findOne({ where: { id: company_id } });
 
@@ -149,7 +139,9 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
     material[0].status_control = status_control || material[0].status_control;
 
     await material[0].save();
-    res.status(200).json({ material: material[0], msg: "Successfully updated" });
+    res
+      .status(200)
+      .json({ material: material[0], msg: "Successfully updated" });
   } catch (err) {
     res.status(500).json({ msg: "Internal Server error", err });
   }
@@ -160,7 +152,7 @@ router.delete("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Material);
-    let material = await repo.find({ where: { id: id } });
+    const material = await repo.find({ where: { id } });
     if (!material || Object.keys(material).length === 0) {
       return res.status(404).json({ material, msg: "not Found" });
     }

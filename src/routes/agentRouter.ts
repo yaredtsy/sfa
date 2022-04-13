@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { Agent } from "../entity/Agent";
 import { createConnection } from "typeorm";
+import { Agent } from "../entity/Agent";
 import { Company } from "../entity/Company";
 import { User } from "../entity/User";
 import isAuthenticated from "../Middleware/isAuthenticated";
@@ -15,17 +15,25 @@ const conn = createConnection().then((con) => {
 
 // CREATE/POST
 router.post("/", isAuthenticated, async (req: any, res) => {
-  let {
+  const {
     agentName,
     agentCode,
     address,
     company_id,
     email,
     phoneNumber,
-    region_id
+    region_id,
   } = req.body;
   if (
-    !(agentName && agentCode && address && company_id && email && phoneNumber && region_id)
+    !(
+      agentName &&
+      agentCode &&
+      address &&
+      company_id &&
+      email &&
+      phoneNumber &&
+      region_id
+    )
   ) {
     return res.status(400).json({
       msg: "Please insert Data properly and make sure all fields are filled",
@@ -36,7 +44,9 @@ router.post("/", isAuthenticated, async (req: any, res) => {
     const repo = (await conn).getRepository(Agent);
     const repo2 = (await conn).getRepository(User);
     const repo3 = (await conn).getRepository(Company);
-    const region = await (await conn).getRepository(Region).findOne({where: {id: region_id}})
+    const region = await (await conn)
+      .getRepository(Region)
+      .findOne({ where: { id: region_id } });
     const userid = Number(req.user.id);
     const user = await repo2.findOne({ where: { id: userid } });
     const company = await repo3.findOne({ where: { id: company_id } });
@@ -48,13 +58,11 @@ router.post("/", isAuthenticated, async (req: any, res) => {
       phoneNumber,
       agentCode,
       company_id: company,
-      region_id: region
+      region_id: region,
     });
     await newAgent.save();
 
-    return res
-      .status(201)
-      .json({ msg: "new agent created", agent: newAgent });
+    return res.status(201).json({ msg: "new agent created", agent: newAgent });
   } catch (err) {
     return res.status(500).json({ msg: "Internal Server Error" });
   }
@@ -66,9 +74,7 @@ router.get("/", isAuthenticated, async (req, res) => {
     const repo = (await conn).getRepository(Agent);
     const agents = await repo.find();
     if (agents.length == 0) {
-      return res
-        .status(200)
-        .json({ msg: "Agent table is Empty", agents });
+      return res.status(200).json({ msg: "Agent table is Empty", agents });
     }
     res.status(200).json({ msg: "success", agent: agents });
   } catch (err) {
@@ -81,7 +87,7 @@ router.get("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Agent);
-    const agent = await repo.find({ where: { id: id } });
+    const agent = await repo.find({ where: { id } });
     if (!agent || Object.keys(agent).length === 0) {
       return res.status(404).json({ agent, msg: "not Found" });
     }
@@ -107,8 +113,8 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
   try {
     const repo = (await conn).getRepository(Agent);
     const repo2 = (await conn).getRepository(Company);
-    
-    let agent = await repo.find({ where: { id: id } });
+
+    const agent = await repo.find({ where: { id } });
     if (!agent || Object.keys(agent).length === 0) {
       return res.status(404).json({ agent, msg: "not Found" });
     }
@@ -125,7 +131,8 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
     ) {
       return res.status(400).json({ msg: "no DATA", body: req.body });
     }
-    let company = null, region = null;
+    let company = null;
+    let region = null;
 
     if (company_id) {
       company = await repo2.findOne({ where: { id: company_id } });
@@ -135,12 +142,14 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
       }
     }
     if (region_id) {
-        region = await (await conn).getRepository(Region).findOne({where: {id: region_id}})
-  
-        if (!region || Object.keys(region).length == 0) {
-          return res.status(400).json({ msg: "error with region", company });
-        }
+      region = await (await conn)
+        .getRepository(Region)
+        .findOne({ where: { id: region_id } });
+
+      if (!region || Object.keys(region).length == 0) {
+        return res.status(400).json({ msg: "error with region", company });
       }
+    }
 
     agent[0].company_id = company || agent[0].company_id;
     agent[0].region_id = region || agent[0].region_id;
@@ -152,9 +161,7 @@ router.patch("/:id", isAuthenticated, async (req, res) => {
     agent[0].status_control = status_control || agent[0].status_control;
 
     await agent[0].save();
-    res
-      .status(200)
-      .json({ agent: agent[0], msg: "Successfully updated" });
+    res.status(200).json({ agent: agent[0], msg: "Successfully updated" });
   } catch (err) {
     res.status(500).json({ msg: "Internal Server error", err });
   }
@@ -165,7 +172,7 @@ router.delete("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Agent);
-    let agent = await repo.find({ where: { id: id } });
+    const agent = await repo.find({ where: { id } });
     if (!agent || Object.keys(agent).length === 0) {
       return res.status(404).json({ agent, msg: "not Found" });
     }

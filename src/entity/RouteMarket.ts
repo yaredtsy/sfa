@@ -1,6 +1,16 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, ManyToMany, ManyToOne, UpdateDateColumn, OneToMany} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  CreateDateColumn,
+  ManyToMany,
+  ManyToOne,
+  UpdateDateColumn,
+  OneToMany,
+} from "typeorm";
 import { User } from "./User";
-import AbstractModel from './AbstractModel'
+import AbstractModel from "./AbstractModel";
 import { Territory } from "./Territory";
 import { Truck } from "./Truck";
 import { Company } from "./Company";
@@ -9,37 +19,36 @@ import { Route } from "./Route";
 
 @Entity("route_market")
 export class RouteMarket extends AbstractModel {
+  @Column({ default: false })
+  monday: boolean;
 
-    @Column({default: false})
-    monday: boolean
-    
-    @Column({default: false})
-    tuesday: boolean
+  @Column({ default: false })
+  tuesday: boolean;
 
-    @Column({default: false})
-    wednesday: boolean
-    
-    @Column({default: false})
-    thursday: boolean
+  @Column({ default: false })
+  wednesday: boolean;
 
-    @Column({default: false})
-    friday: boolean
-    
-    @Column({default: false})
-    saturday: boolean
+  @Column({ default: false })
+  thursday: boolean;
 
-    @Column()
-    fromDate: Date
+  @Column({ default: false })
+  friday: boolean;
 
-    @Column()
-    toDate: Date
+  @Column({ default: false })
+  saturday: boolean;
 
-    @ManyToOne(()=> Truck, truck=> truck.routeMarkets)
-    truck_id: Truck
+  @Column()
+  fromDate: Date;
 
-    @ManyToOne(()=> Route, route=>route.routeMarkets)
-    route_id: Route
+  @Column()
+  toDate: Date;
 
-    @ManyToOne(()=> User, user => user.routeMarkets)
-    created_by: User
+  @ManyToOne(() => Truck, (truck) => truck.routeMarkets)
+  truck_id: Truck;
+
+  @ManyToOne(() => Route, (route) => route.routeMarkets)
+  route_id: Route;
+
+  @ManyToOne(() => User, (user) => user.routeMarkets)
+  created_by: User;
 }

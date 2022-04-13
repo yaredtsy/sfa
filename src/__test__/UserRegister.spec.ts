@@ -1,8 +1,9 @@
 import supertest from "supertest";
-import app from "../app";
 import { response, Response } from "express";
-import { User } from "../entity/User";
 import { createConnection } from "typeorm";
+import app from "../app";
+import { User } from "../entity/User";
+
 const request = supertest(app);
 
 jest.useFakeTimers("legacy");
@@ -88,10 +89,10 @@ describe("User Route", () => {
       expect(response.status).toBe(400);
     });
 
-    it("should hashpassword when storing to db", async() => {
-        const response = await postValidUser2();
-        expect(response.body.user.password).not.toBe('123abc');
-    })
+    it("should hashpassword when storing to db", async () => {
+      const response = await postValidUser2();
+      expect(response.body.user.password).not.toBe("123abc");
+    });
   });
 
   describe("UserRegister GET", () => {
@@ -132,12 +133,15 @@ describe("User Route", () => {
 
   describe("Users PUT/Patch request", () => {
     it("should return status code 200", (done) => {
-      request.patch("/api/v1.0/users/1").send({
-        middleName: "Updated"
-      }).then((response) => {
-        expect(response.status).toBe(200);
-        done();
-      });
+      request
+        .patch("/api/v1.0/users/1")
+        .send({
+          middleName: "Updated",
+        })
+        .then((response) => {
+          expect(response.status).toBe(200);
+          done();
+        });
     });
 
     it("should return object relative to the id", (done) => {
@@ -155,67 +159,65 @@ describe("User Route", () => {
     });
   });
 
-    describe("Users DELETE request", () => {
-      it("should return status code 202", (done) => {
-        request.delete("/api/v1.0/users/1").then((response: any) => {
-          expect(response.status).toBe(202);
-          done();
-        });
-      });
-
-      it("should return object relative to the id", (done) => {
-        request.delete("/api/v1.0/users/1").then((response: any) => {
-          expect(response.body).toMatchObject({});
-          done();
-        });
-      });
-
-      it("should return status code 404 for bad id", (done) => {
-        request.delete("/api/v1.0/users/111").then((response: any) => {
-          expect(response.status).toBe(404);
-          done();
-        });
+  describe("Users DELETE request", () => {
+    it("should return status code 202", (done) => {
+      request.delete("/api/v1.0/users/1").then((response: any) => {
+        expect(response.status).toBe(202);
+        done();
       });
     });
 
-    describe("User Login", ()=> {
-        const valid = ()=>{
-            return request.post('/api/v1.0/users/login').send({
-                email: "j@j.com",
-                password: "123abc"
-            })
-        }
-        const inValid = () => {
-            return request.post('/api/v1.0/users/login').send({
-                email: "j@j.com",
-                password: "123bca"
-            })
-        }
-        const notFound = () => {
-            return request.post('/api/v1.0/users/login').send({
-                email: "test@none.com",
-                password: "123bca"
-            })
-        }
-        it("should return status code 200 OK, on valid input", async ()=> {
-            const response = await valid();
-            expect(response.status).toBe(200);
-        })
+    it("should return object relative to the id", (done) => {
+      request.delete("/api/v1.0/users/1").then((response: any) => {
+        expect(response.body).toMatchObject({});
+        done();
+      });
+    });
 
-        it("should return 400 bad data, on wrong email or password", async()=>{
-            const response = await inValid();
-            expect(response.status).toBe(400);
-        })
-        it("should return 404 not Found, on bad data", async()=>{
-            const response = await notFound();
-            expect(response.status).toBe(404);
-        })
+    it("should return status code 404 for bad id", (done) => {
+      request.delete("/api/v1.0/users/111").then((response: any) => {
+        expect(response.status).toBe(404);
+        done();
+      });
+    });
+  });
 
-        it("should store jwt token on sucessful", async()=> {
-            const response = await valid();
-            expect(response.body.token).toBeDefined();
-        })
-    })
+  describe("User Login", () => {
+    const valid = () => {
+      return request.post("/api/v1.0/users/login").send({
+        email: "j@j.com",
+        password: "123abc",
+      });
+    };
+    const inValid = () => {
+      return request.post("/api/v1.0/users/login").send({
+        email: "j@j.com",
+        password: "123bca",
+      });
+    };
+    const notFound = () => {
+      return request.post("/api/v1.0/users/login").send({
+        email: "test@none.com",
+        password: "123bca",
+      });
+    };
+    it("should return status code 200 OK, on valid input", async () => {
+      const response = await valid();
+      expect(response.status).toBe(200);
+    });
+
+    it("should return 400 bad data, on wrong email or password", async () => {
+      const response = await inValid();
+      expect(response.status).toBe(400);
+    });
+    it("should return 404 not Found, on bad data", async () => {
+      const response = await notFound();
+      expect(response.status).toBe(404);
+    });
+
+    it("should store jwt token on sucessful", async () => {
+      const response = await valid();
+      expect(response.body.token).toBeDefined();
+    });
+  });
 });
-
-

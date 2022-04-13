@@ -1,0 +1,49 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base",
+        "airbnb", "airbnb-typescript", "plugin:prettier/recommended", "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "consistent-return": "off",
+        "func-names": "off",
+        "import/no-cycle": "off",
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "max-len": "off",
+        "no-use-before-define": "off",
+        "prettier/prettier": [
+          "error",
+          {
+            "endOfLine": "auto"
+          }
+        ]
+    
+    },
+    "settings": {
+        "import/extensions": [".js",  ".ts"],
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts"]
+        },
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".ts"],
+            "moduleDirectory": ["node_modules", "src/"]
+          }
+        }
+      }
+}

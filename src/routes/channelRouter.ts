@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { Channel } from "../entity/Channel";
 import { createConnection } from "typeorm";
+import { Channel } from "../entity/Channel";
 import { Company } from "../entity/Company";
 import { User } from "../entity/User";
 import isAuthenticated from "../Middleware/isAuthenticated";
@@ -15,12 +15,8 @@ const conn = createConnection().then((con) => {
 
 // CREATE/POST
 router.post("/", isAuthenticated, async (req: any, res) => {
-  let {
-    channelName
-  } = req.body;
-  if (
-    !(channelName)
-  ) {
+  const { channelName } = req.body;
+  if (!channelName) {
     return res.status(400).json({
       msg: "Please insert Data properly and make sure all fields are filled",
     });
@@ -33,7 +29,7 @@ router.post("/", isAuthenticated, async (req: any, res) => {
     const user = await repo2.findOne({ where: { id: userid } });
     const newChannel = repo.create({
       created_by: user,
-      channelName
+      channelName,
     });
     await newChannel.save();
 
@@ -41,7 +37,7 @@ router.post("/", isAuthenticated, async (req: any, res) => {
       .status(201)
       .json({ msg: "new channel created", channel: newChannel });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 });
@@ -52,9 +48,7 @@ router.get("/", isAuthenticated, async (req, res) => {
     const repo = (await conn).getRepository(Channel);
     const channels = await repo.find();
     if (channels.length == 0) {
-      return res
-        .status(200)
-        .json({ msg: "Channel table is Empty", channels });
+      return res.status(200).json({ msg: "Channel table is Empty", channels });
     }
     res.status(200).json({ msg: "success", channel: channels });
   } catch (err) {
@@ -67,7 +61,7 @@ router.get("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Channel);
-    const channel = await repo.find({ where: { id: id } });
+    const channel = await repo.find({ where: { id } });
     if (!channel || Object.keys(channel).length === 0) {
       return res.status(404).json({ channel, msg: "not Found" });
     }
@@ -80,33 +74,23 @@ router.get("/:id", isAuthenticated, async (req, res) => {
 // PATCH
 router.patch("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
-  const {
-    channelName,
-    status_control,
-  } = req.body;
+  const { channelName, status_control } = req.body;
   try {
     const repo = (await conn).getRepository(Channel);
-    
-    let channel = await repo.find({ where: { id: id } });
+
+    const channel = await repo.find({ where: { id } });
     if (!channel || Object.keys(channel).length === 0) {
       return res.status(404).json({ channel, msg: "not Found" });
     }
-    if (
-      !(
-        channelName ||
-        status_control
-      )
-    ) {
+    if (!(channelName || status_control)) {
       return res.status(400).json({ msg: "no DATA", body: req.body });
     }
-    
+
     channel[0].channelName = channelName || channel[0].channelName;
     channel[0].status_control = status_control || channel[0].status_control;
 
     await channel[0].save();
-    res
-      .status(200)
-      .json({ channel: channel[0], msg: "Successfully updated" });
+    res.status(200).json({ channel: channel[0], msg: "Successfully updated" });
   } catch (err) {
     res.status(500).json({ msg: "Internal Server error", err });
   }
@@ -117,7 +101,7 @@ router.delete("/:id", isAuthenticated, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const repo = (await conn).getRepository(Channel);
-    let channel = await repo.find({ where: { id: id } });
+    const channel = await repo.find({ where: { id } });
     if (!channel || Object.keys(channel).length === 0) {
       return res.status(404).json({ channel, msg: "not Found" });
     }
