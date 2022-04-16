@@ -19,26 +19,26 @@ import { Invoice } from "./Invoice";
 @Entity("material")
 export class Material extends AbstractModel {
   @Column({ length: 3 })
-  brandType: string;
+  brandType!: string;
 
   @Column()
-  brandName: string;
+  brandName!: string;
 
   @Column()
-  unitPrice: number;
+  unitPrice!: number;
 
   @Column()
-  description: string;
+  description!: string;
 
   @Column()
-  sku: string;
+  sku!: string;
 
   @ManyToOne(() => User, (user) => user.materials)
-  created_by: User;
+  created_by!: User;
 
   @ManyToOne(() => Company, (company) => company.materials)
-  company_id: Company;
+  company_id!: Company;
 
   @OneToMany(() => Invoice, (invoice) => invoice.material_id)
-  invoices: Invoice[];
+  invoices!: Invoice[];
 }

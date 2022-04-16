@@ -17,72 +17,72 @@ import { Invoice } from "./Invoice";
 @Entity("user_detail")
 export class User extends AbstractModel {
   @Column()
-  firstName: string;
+  firstName!: string;
 
   @Column()
-  middleName: string;
+  middleName!: string;
 
   @Column()
-  lastName: string;
+  lastName!: string;
 
   @Column({
     unique: true,
   })
-  email: string;
+  email!: string;
 
   @Column({
     unique: true,
   })
-  phoneNumber: string;
+  phoneNumber!: string;
 
   @Column()
-  role: number;
+  role!: number;
 
   @Column()
-  address: string;
+  address!: string;
 
   @Column()
-  position: string;
+  position!: string;
 
   @Column()
-  password: string;
+  password!: string;
 
   @OneToMany(() => Nation, (nation) => nation.created_by)
-  nations: Nation[];
+  nations!: Nation[];
 
   @OneToMany(() => Company, (company) => company.created_by)
-  companies: Company[];
+  companies!: Company[];
 
   @OneToMany(() => Region, (region) => region.created_by)
-  regions: Region[];
+  regions!: Region[];
 
   @OneToMany(() => Territory, (territory) => territory.created_by)
-  territories: Territory[];
+  territories!: Territory[];
 
   @OneToMany(() => Truck, (truck) => truck.created_by)
-  trucks: Truck[];
+  trucks!: Truck[];
 
   @OneToMany(() => Route, (route) => route.created_by)
-  routes: Route[];
+  routes!: Route[];
 
   @OneToMany(() => Outlet, (outlet) => outlet.created_by)
-  outlets: Outlet[];
+  outlets!: Outlet[];
 
   @OneToMany(() => City, (city) => city.created_by)
-  cities: City[];
+  cities!: City[];
 
   @OneToMany(() => Material, (material) => material.created_by)
-  materials: Material[];
+  materials!: Material[];
 
   @OneToMany(() => Channel, (channel) => channel.created_by)
-  channels: Channel[];
+  channels!: Channel[];
 
   @OneToMany(() => Agent, (agent) => agent.created_by)
-  agents: Agent[];
+  agents!: Agent[];
 
   @OneToMany(() => RouteMarket, (rm) => rm.created_by)
-  routeMarkets: RouteMarket[];
+  routeMarkets!: RouteMarket[];
 
   @OneToMany(() => Invoice, (invoice) => invoice.created_by)
-  invoices: Invoice[];
+  invoices!: Invoice[];
 }

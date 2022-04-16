@@ -20,35 +20,36 @@ import { Route } from "./Route";
 @Entity("route_market")
 export class RouteMarket extends AbstractModel {
   @Column({ default: false })
-  monday: boolean;
+  monday!: boolean;
 
   @Column({ default: false })
-  tuesday: boolean;
+  tuesday!: boolean;
 
   @Column({ default: false })
-  wednesday: boolean;
+  wednesday!: boolean;
 
   @Column({ default: false })
-  thursday: boolean;
+  thursday!: boolean;
 
   @Column({ default: false })
-  friday: boolean;
+  friday!: boolean;
 
   @Column({ default: false })
-  saturday: boolean;
+  saturday!: boolean;
+
 
   @Column()
-  fromDate: Date;
+  fromDate!: Date;
 
   @Column()
-  toDate: Date;
+  toDate!: Date;
 
   @ManyToOne(() => Truck, (truck) => truck.routeMarkets)
-  truck_id: Truck;
+  truck_id!: Truck;
 
   @ManyToOne(() => Route, (route) => route.routeMarkets)
-  route_id: Route;
+  route_id!: Route;
 
   @ManyToOne(() => User, (user) => user.routeMarkets)
-  created_by: User;
+  created_by!: User;
 }

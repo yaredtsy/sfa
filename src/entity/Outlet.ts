@@ -22,38 +22,38 @@ import { Invoice } from "./Invoice";
 @Entity("outlet")
 export class Outlet extends AbstractModel {
   @Column()
-  outletName: string;
+  outletName!: string;
 
   @Column()
-  ownerName: string;
+  ownerName!: string;
 
   @Column()
-  phoneNumber: string;
+  phoneNumber!: string;
 
   @Column()
-  vatNumber: string;
+  vatNumber!: string;
 
   @Column()
-  geoLat: string;
+  geoLat!: string;
 
   @Column()
-  geoLong: string;
+  geoLong!: string;
 
   @ManyToOne(() => User, (user) => user.outlets)
-  created_by: User;
+  created_by!: User;
 
   @ManyToOne(() => Company, (company) => company.outlets)
-  company_id: Company;
+  company_id!: Company;
 
   @ManyToOne(() => City, (city) => city.outlets)
-  city_id: City;
+  city_id!: City;
 
   @ManyToOne(() => Route, (route) => route.outlets)
-  route_id: Route;
+  route_id!: Route;
 
   @ManyToOne(() => Channel, (channel) => channel.outlets)
-  channel_id: Channel;
+  channel_id!: Channel;
 
   @OneToMany(() => Invoice, (invoice) => invoice.outlet_id)
-  invoices: Invoice[];
+  invoices!: Invoice[];
 }

@@ -1,8 +1,8 @@
 import express from "express";
 import "reflect-metadata";
 
-import {} from 'config/connection';
-import {swaggerSpec, swaggerUi} from 'config/swagger';
+import {} from "config/connection";
+import { swaggerSpec, swaggerUi } from "config/swagger";
 //
 
 import cors from "cors";
@@ -39,7 +39,6 @@ app.use("/api/v1.0/agents", agentRouter);
 app.use("/api/v1.0/channels", channelRouter);
 app.use("/api/v1.0/route-markets", routeMarketRouter);
 app.use("/api/v1.0/invoices", invoiceRouter);
-
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

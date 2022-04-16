@@ -8,6 +8,7 @@ import {
   ManyToOne,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import { User } from "./User";
 import AbstractModel from "./AbstractModel";
@@ -21,38 +22,38 @@ import { Invoice } from "./Invoice";
 @Entity("company")
 export class Company extends AbstractModel {
   @Column({ length: 2 })
-  companyCode: string;
+  companyCode!: string;
 
   @Column()
-  companyName: string;
+  companyName!: string;
+
+  // @OneToOne(()=> {})
+  // city: string;
 
   @Column()
-  city: string;
+  address!: string;
 
   @Column()
-  address: string;
-
-  @Column()
-  numberOfAgents: number;
+  numberOfAgents!: number;
 
   @OneToMany(() => Region, (region) => region.company_id)
-  regions: Region[];
+  regions!: Region[];
 
   @OneToMany(() => Material, (material) => material.company_id)
-  materials: Material[];
+  materials!: Material[];
 
   @OneToMany(() => Outlet, (outlet) => outlet.company_id)
-  outlets: Outlet[];
+  outlets!: Outlet[];
 
   @ManyToOne(() => Nation, (nation) => nation.companies)
-  company_nation_id: Nation;
+  company_nation_id!: Nation;
 
   @ManyToOne(() => User, (user) => user.companies)
-  created_by: User;
+  created_by!: User;
 
   @OneToMany(() => Agent, (agent) => agent.company_id)
-  agents: Agent[];
+  agents!: Agent[];
 
   @OneToMany(() => Invoice, (invoice) => invoice.company_id)
-  invoices: Invoice[];
+  invoices!: Invoice[];
 }

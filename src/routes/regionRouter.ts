@@ -1,28 +1,32 @@
 import { Router } from "express";
-import { CreateRegion,GetAll,GetOneRegion,UpdateRegion,DeleteRegion } from "controller/regionController";
+import {
+  CreateRegion,
+  GetAll,
+  GetOneRegion,
+  UpdateRegion,
+  DeleteRegion,
+} from "controller/regionController";
 import isAuthenticated from "../Middleware/isAuthenticated";
 
 const router = Router();
-
 
 /*
  * @method POST
  * @url /api/v1.0/regions/
  * @desc create region
- * @params 
+ * @params
  *
  */
 router.post("/", isAuthenticated, CreateRegion);
-
 
 /*
  * @method GET
  * @url /api/v1.0/regions/
  * @desc get all region
- * @params 
+ * @params
  *
  */
-router.get("/", isAuthenticated, GetAll)
+router.get("/", isAuthenticated, GetAll);
 
 /*
  * @method GET
@@ -33,7 +37,6 @@ router.get("/", isAuthenticated, GetAll)
  */
 router.get("/:id", isAuthenticated, GetOneRegion);
 
-
 /*
  * @method PATCH
  * @url /api/v1.0/regions/:id
@@ -42,7 +45,6 @@ router.get("/:id", isAuthenticated, GetOneRegion);
  *
  */
 router.patch("/:id", isAuthenticated, UpdateRegion);
-
 
 /*
  * @method DELET

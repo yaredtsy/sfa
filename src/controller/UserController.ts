@@ -9,18 +9,17 @@ import jwt from "jsonwebtoken";
 
 import { User } from "entity/User";
 
-
 const conn = createConnection().then((con) => {
   // con.query("DELETE FROM user_detail WHERE id != 1");
   return con;
 });
 
 async function hashPassword(plainPwd: string) {
-  return await bcrypt.hash(plainPwd, 10);
+  return bcrypt.hash(plainPwd, 10);
 }
 
 async function validatePassword(plainPwd: string, hashPwd: string) {
-  return await bcrypt.compare(plainPwd, hashPwd);
+  return bcrypt.compare(plainPwd, hashPwd);
 }
 
 const GetAllUser = async (
@@ -154,10 +153,12 @@ const UpdateUser = async (
     user.password = password || user.password;
 
     await user.save();
-    res.status(status.OK).json({ user: user, msg: "successfully updated" });
+    res.status(status.OK).json({ user, msg: "successfully updated" });
   } catch (err) {
     console.log(err);
-    res.status(status.INTERNAL_SERVER_ERROR).json({ msg: "Something went wrong", err });
+    res
+      .status(status.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Something went wrong", err });
   }
 };
 
@@ -193,7 +194,7 @@ const Login = async (
   const { email, password } = req.body;
   try {
     const repo = (await conn).getRepository(User);
-    const user = await repo.findOne({ where: { email: email } });
+    const user = await repo.findOne({ where: { email } });
 
     if (!user) {
       return res.status(status.NOT_FOUND).json({ msg: "not Found" });
@@ -208,7 +209,7 @@ const Login = async (
       process.env.JWT_SECRET || "SFAJWT"
     );
     // res.cookie("auth", token);
-    return res.status(status.OK).json({ token, user: user });
+    return res.status(status.OK).json({ token, user });
   } catch (error) {
     res.status(status.INTERNAL_SERVER_ERROR).json({ msg: error });
   }
@@ -242,8 +243,16 @@ const forgetPassword = async (
 
     res.json({ token, dec, user });
   } catch (error) {
-    res.status(status.INTERNAL_SERVER_ERROR).json({ error})
+    res.status(status.INTERNAL_SERVER_ERROR).json({ error });
   }
 };
 
-export { GetAllUser,GetUser,CreateUser,UpdateUser,DeleteUser,Login,forgetPassword };
+export {
+  GetAllUser,
+  GetUser,
+  CreateUser,
+  UpdateUser,
+  DeleteUser,
+  Login,
+  forgetPassword,
+};

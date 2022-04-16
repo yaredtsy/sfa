@@ -5,20 +5,18 @@ import {
   GetAllController,
   GetByPageNumber,
   GetOneOutlet,
-  UpdateOutlet
-} from 'controller/outletController';
+  UpdateOutlet,
+} from "controller/outletController";
 
 import isAuthenticated from "Middleware/isAuthenticated";
 
 const router = Router();
 
-
-
 /*
  * @method POST
  * @url /api/v1.0/outlets/
  * @desc create region
- * @params 
+ * @params
  *
  */
 router.post("/", isAuthenticated, CreateOutlet);
@@ -27,10 +25,10 @@ router.post("/", isAuthenticated, CreateOutlet);
  * @method GET
  * @url /api/v1.0/outlets/
  * @desc get all outlets
- * @params 
+ * @params
  *
  */
-router.get("/", isAuthenticated,GetAllController);
+router.get("/", isAuthenticated, GetAllController);
 
 /*
  * @method GET
@@ -60,12 +58,12 @@ router.get("/:id", isAuthenticated, GetOneOutlet);
 router.patch("/:id", isAuthenticated, UpdateOutlet);
 
 /*
-* @method DELETE
-* @url /api/v1.0/outlets/
-* @desc delete outlet
-* @params outlet id
-*
-*/
-router.delete("/:id", isAuthenticated,DeleteOutlet);
+ * @method DELETE
+ * @url /api/v1.0/outlets/
+ * @desc delete outlet
+ * @params outlet id
+ *
+ */
+router.delete("/:id", isAuthenticated, DeleteOutlet);
 
 export default router;

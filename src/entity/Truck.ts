@@ -9,26 +9,26 @@ import { Invoice } from "./Invoice";
 @Entity("truck")
 export class Truck extends AbstractModel {
   @Column({ length: 9 })
-  truckCode: string;
+  truckCode!: string;
 
   @Column()
-  truckName: string;
+  truckName!: string;
 
   @Column({ length: 7 })
-  plateNumber: string;
+  plateNumber!: string;
 
   @ManyToOne(() => User, (user) => user.trucks)
-  created_by: User;
+  created_by!: User;
 
   @ManyToOne(() => Territory, (territory) => territory.trucks)
-  territory_id: Territory;
+  territory_id!: Territory;
 
   @OneToMany(() => Route, (route) => route.truck_id)
-  routes: Route;
+  routes!: Route;
 
   @OneToMany(() => RouteMarket, (routeMarket) => routeMarket.truck_id)
-  routeMarkets: RouteMarket[];
+  routeMarkets!: RouteMarket[];
 
   @OneToMany(() => Invoice, (invoice) => invoice.truck_id)
-  invoices: Invoice[];
+  invoices!: Invoice[];
 }

@@ -16,7 +16,7 @@ const router = Router();
  * @desc returns all users
  * @params null
  * @response [User]
-*/
+ */
 router.post("/", isAuthenticated, CreateRouteMarket);
 
 /*
@@ -25,7 +25,7 @@ router.post("/", isAuthenticated, CreateRouteMarket);
  * @desc returns all users
  * @params null
  * @response [User]
-*/
+ */
 router.get("/", isAuthenticated, GetAll);
 
 /*
@@ -34,7 +34,7 @@ router.get("/", isAuthenticated, GetAll);
  * @desc returns all users
  * @params null
  * @response [User]
-*/
+ */
 router.get("/:id", isAuthenticated, GetOne);
 
 /*
@@ -43,7 +43,7 @@ router.get("/:id", isAuthenticated, GetOne);
  * @desc returns all users
  * @params null
  * @response [User]
-*/
+ */
 router.patch("/:id", isAuthenticated, UpdateRouteMarket);
 
 /*
@@ -52,7 +52,7 @@ router.patch("/:id", isAuthenticated, UpdateRouteMarket);
  * @desc returns all users
  * @params null
  * @response [User]
-*/
+ */
 router.delete("/:id", isAuthenticated, Delete);
 
 export default router;

@@ -75,7 +75,7 @@ const UpdateNational = async (req: express.Request, res: express.Response) => {
     nation.status_control = status_control || nation.status_control;
     await nation.save();
 
-    res.status(status.OK).json({ nation: nation });
+    res.status(status.OK).json({ nation });
   } catch (err) {
     res.status(status.INTERNAL_SERVER_ERROR).json({ msg: err });
   }
@@ -97,4 +97,10 @@ const DeleteNation = async (req: express.Request, res: express.Response) => {
   }
 };
 
-export { createNation, GetAllNation,GetOneNation ,UpdateNational, DeleteNation };
+export {
+  createNation,
+  GetAllNation,
+  GetOneNation,
+  UpdateNational,
+  DeleteNation,
+};

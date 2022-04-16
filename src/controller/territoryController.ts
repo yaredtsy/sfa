@@ -98,7 +98,7 @@ const UpdateTerritory = async (req: express.Request, res: express.Response) => {
     territory.status_control = status_control || territory.status_control;
 
     await territory.save();
-    res.status(status.OK).json({ territory: territory });
+    res.status(status.OK).json({ territory });
   } catch (err) {
     console.log(err);
     res.status(status.INTERNAL_SERVER_ERROR).json({ msg: err });
@@ -110,7 +110,7 @@ const DeleteTerritory = async (req: express.Request, res: express.Response) => {
   try {
     const repo = (await conn).getRepository(Territory);
     const territory = await repo.findOne({ where: { id } });
-    if (!territory ) {
+    if (!territory) {
       return res.status(status.NOT_FOUND).json({ territory, msg: "not Found" });
     }
     territory.status_control = 0;
@@ -121,4 +121,10 @@ const DeleteTerritory = async (req: express.Request, res: express.Response) => {
   }
 };
 
-export {CreateTerritory,GetAllTerritories,GetOneTerritory,UpdateTerritory,DeleteTerritory}
+export {
+  CreateTerritory,
+  GetAllTerritories,
+  GetOneTerritory,
+  UpdateTerritory,
+  DeleteTerritory,
+};

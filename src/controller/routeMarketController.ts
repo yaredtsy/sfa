@@ -150,8 +150,8 @@ const UpdateRouteMarket = async (req: any, res: express.Response) => {
         .getRepository(Truck)
         .findOne({ where: { id: truck_id } });
 
-      if (!truck ) {
-        return res.status(status.OK).json({ msg: "error with truck", });
+      if (!truck) {
+        return res.status(status.OK).json({ msg: "error with truck" });
       }
     }
 
@@ -159,8 +159,8 @@ const UpdateRouteMarket = async (req: any, res: express.Response) => {
       route = await (await conn)
         .getRepository(Route)
         .findOne({ where: { id: route_id } });
-      if (!route ) {
-        return res.status(400).json({ msg: "error with route"});
+      if (!route) {
+        return res.status(400).json({ msg: "error with route" });
       }
     }
     routeMarket.monday = monday || routeMarket.monday;
@@ -174,7 +174,7 @@ const UpdateRouteMarket = async (req: any, res: express.Response) => {
     routeMarket.status_control = status_control || routeMarket.status_control;
 
     await routeMarket.save();
-    res.status(status.OK).json({ routeMarket: routeMarket });
+    res.status(status.OK).json({ routeMarket });
   } catch (err) {
     res
       .status(status.INTERNAL_SERVER_ERROR)
@@ -182,30 +182,24 @@ const UpdateRouteMarket = async (req: any, res: express.Response) => {
   }
 };
 
+const Delete = async (req: express.Request, res: express.Response) => {
+  const id = Number(req.params.id);
+  try {
+    const repo = (await conn).getRepository(RouteMarket);
+    const routeMarket = await repo.findOne({ where: { id } });
 
-const Delete = async(req: express.Request, res: express.Response) =>{
-    const id = Number(req.params.id);
-    try {
-      const repo = (await conn).getRepository(RouteMarket);
-      const routeMarket = await repo.findOne({ where: { id } });
-
-      if (!routeMarket) {
-        return res.status(status.NOT_FOUND).json({ msg: "not Found" });
-      }
-
-      routeMarket.status_control = 0;
-      await routeMarket.save();
-      res.status(status.OK).json({ routeMarket,});
-
-    } catch (err) {
-      res.status(status.INTERNAL_SERVER_ERROR).json({ msg: "Internal Server error" });
+    if (!routeMarket) {
+      return res.status(status.NOT_FOUND).json({ msg: "not Found" });
     }
-}
 
-export {
-    CreateRouteMarket,
-    GetAll,
-    GetOne,
-    UpdateRouteMarket,
-    Delete
-}
+    routeMarket.status_control = 0;
+    await routeMarket.save();
+    res.status(status.OK).json({ routeMarket });
+  } catch (err) {
+    res
+      .status(status.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server error" });
+  }
+};
+
+export { CreateRouteMarket, GetAll, GetOne, UpdateRouteMarket, Delete };

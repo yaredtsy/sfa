@@ -24,29 +24,29 @@ import { Route } from "./Route";
 @Entity("invoice")
 export class Invoice extends AbstractModel {
   @Column()
-  outletName: string;
+  outletName!: string;
 
   @Column()
-  quantity: number;
+  quantity!: number;
 
   @Column()
-  totalPrice: number;
+  totalPrice!: number;
 
   @ManyToOne(() => Company, (company) => company.invoices)
-  company_id: Company;
+  company_id!: Company;
 
   @ManyToOne(() => Truck, (truck) => truck.invoices)
-  truck_id: Truck;
+  truck_id!: Truck;
 
   @ManyToOne(() => Route, (route) => route.invoices)
-  route_id: Route;
+  route_id!: Route;
 
   @ManyToOne(() => Outlet, (outlet) => outlet.invoices, { nullable: true })
-  outlet_id: Outlet;
+  outlet_id!: Outlet;
 
   @ManyToOne(() => Material, (material) => material.invoices)
-  material_id: Material;
+  material_id!: Material;
 
   @ManyToOne(() => User, (user) => user.invoices)
-  created_by: User;
+  created_by!: User;
 }

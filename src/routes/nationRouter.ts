@@ -5,27 +5,56 @@ import {
   GetOneNation,
   UpdateNational,
   DeleteNation,
-} from 'controller/nationalController';
+} from "controller/nationalController";
 
 import isAuthenticated from "Middleware/isAuthenticated";
 
 const router = Router();
 // for test purpose
 
-
-// CREATE/POST
+/*
+ * @method POST
+ * @url /api/v1.0/nations/
+ * @desc create nations
+ * @params
+ *
+ */
 router.post("/", isAuthenticated, createNation);
 
-// GET ALL
+/*
+ * @method GET
+ * @url /api/v1.0/nations/
+ * @desc get all nations
+ * @params
+ *
+ */
 router.get("/", isAuthenticated, GetAllNation);
 
-// GET ONE
+/*
+ * @method GET
+ * @url /api/v1.0/nations/:id
+ * @desc get one nations by id
+ * @params nation id
+ *
+ */
 router.get("/:id", isAuthenticated, GetOneNation);
 
-// PATCH
+/*
+ * @method PATCH
+ * @url /api/v1.0/nations/:id
+ * @desc update  nation
+ * @params nation id
+ *
+ */
 router.patch("/:id", isAuthenticated, UpdateNational);
 
-// DELETE
+/*
+ * @method DELETE
+ * @url /api/v1.0/nations/:id
+ * @desc get all nations
+ * @params nation id
+ *
+ */
 router.delete("/:id", isAuthenticated, DeleteNation);
 
 export default router;

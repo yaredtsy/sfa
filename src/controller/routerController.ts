@@ -6,7 +6,6 @@ import { Route } from "entity/Route";
 import { Truck } from "entity/Truck";
 import { User } from "entity/User";
 
-
 // for test purpose
 const conn = createConnection().then((con) => {
   con.query("DELETE FROM route WHERE id != 1");
@@ -141,7 +140,7 @@ const Update = async (req: express.Request, res: express.Response) => {
 
     await route.save();
 
-    res.status(status.OK).json({ route: route });
+    res.status(status.OK).json({ route });
   } catch (err) {
     res.status(status.INTERNAL_SERVER_ERROR).json({ msg: err });
   }
@@ -154,7 +153,7 @@ const Delete = async (req: express.Request, res: express.Response) => {
     const repo = (await conn).getRepository(Route);
     const route = await repo.findOne({ where: { id } });
 
-    if (!route ) {
+    if (!route) {
       return res.status(status.NOT_FOUND).json({ route, msg: "not Found" });
     }
 
@@ -162,11 +161,11 @@ const Delete = async (req: express.Request, res: express.Response) => {
     await route.save();
 
     res.status(status.OK).json({ route, msg: "Successfully deleted" });
-
   } catch (err) {
-    res.status(status.INTERNAL_SERVER_ERROR).json({ msg: "Internal Server error" });
+    res
+      .status(status.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server error" });
   }
 };
 
-
-export {Create,AddPolygon,GetAll,GetOne,Update,Delete}
+export { Create, AddPolygon, GetAll, GetOne, Update, Delete };

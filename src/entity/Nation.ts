@@ -17,17 +17,17 @@ import { City } from "./CityDetail";
 @Entity("nation")
 export class Nation extends AbstractModel {
   @Column({ length: 2 })
-  nationCode: string;
+  nationCode!: string;
 
   @Column()
-  nationName: string;
+  nationName!: string;
 
   @ManyToOne(() => User, (user) => user.nations)
-  created_by: User;
+  created_by!: User;
 
   @OneToMany(() => Company, (company) => company.company_nation_id)
-  companies: Company[];
+  companies!: Company[];
 
   @OneToMany(() => City, (city) => city.nation_id)
-  cities: City[];
+  cities!: City[];
 }

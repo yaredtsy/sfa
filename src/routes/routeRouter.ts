@@ -15,30 +15,28 @@ const router = Router();
  * @method POST
  * @url /api/v1.0/routes/
  * @desc create route
- * @params 
+ * @params
  *
  */
-router.post("/",isAuthenticated,Create);
-
+router.post("/", isAuthenticated, Create);
 
 /*
  * @method POST
  * @url /api/v1.0/routes/add
  * @desc add polygon
- * @params 
+ * @params
  *
  */
-router.post("/add",isAuthenticated,AddPolygon);
-
+router.post("/add", isAuthenticated, AddPolygon);
 
 /*
  * @method GET
  * @url /api/v1.0/routes/
  * @desc GET All route
- * @params 
+ * @params
  *
  */
-router.get("/", isAuthenticated,GetAll);
+router.get("/", isAuthenticated, GetAll);
 
 /*
  * @method PATCH
@@ -47,8 +45,7 @@ router.get("/", isAuthenticated,GetAll);
  * @params route id
  *
  */
-router.get("/:id", isAuthenticated,GetOne);
-
+router.get("/:id", isAuthenticated, GetOne);
 
 /*
  * @method PATCH
@@ -57,8 +54,7 @@ router.get("/:id", isAuthenticated,GetOne);
  * @params route id
  *
  */
-router.patch("/:id",isAuthenticated,Update);
-
+router.patch("/:id", isAuthenticated, Update);
 
 /*
  * @method DELETE
@@ -67,6 +63,6 @@ router.patch("/:id",isAuthenticated,Update);
  * @params route id
  *
  */
-router.delete("/:id", isAuthenticated,Delete);
+router.delete("/:id", isAuthenticated, Delete);
 
 export default router;

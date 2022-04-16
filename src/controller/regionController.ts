@@ -145,10 +145,4 @@ const DeleteRegion = async (req: express.Request, res: express.Response) => {
   }
 };
 
-export {
-    CreateRegion,
-    GetAll,
-    GetOneRegion,
-    UpdateRegion,
-    DeleteRegion
-}
+export { CreateRegion, GetAll, GetOneRegion, UpdateRegion, DeleteRegion };

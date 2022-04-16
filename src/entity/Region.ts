@@ -19,23 +19,23 @@ import { Agent } from "./Agent";
 @Entity("region")
 export class Region extends AbstractModel {
   @Column({ length: 5 })
-  regionCode: string;
+  regionCode!: string;
 
   @Column()
-  regionName: string;
+  regionName!: string;
 
   @ManyToOne(() => User, (user) => user.regions)
-  created_by: User;
+  created_by!: User;
 
   @ManyToOne(() => Company, (company) => company.regions)
-  company_id: Company;
+  company_id!: Company;
 
   @OneToMany(() => Territory, (territory) => territory.region_id)
-  territories: Territory[];
+  territories!: Territory[];
 
   @OneToMany(() => City, (city) => city.region_id)
-  cities: City[];
+  cities!: City[];
 
   @OneToMany(() => Agent, (agent) => agent.region_id)
-  agents: Agent[];
+  agents!: Agent[];
 }

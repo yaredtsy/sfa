@@ -29,4 +29,4 @@ const options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 
-export {swaggerUi,swaggerSpec}
+export { swaggerUi, swaggerSpec };

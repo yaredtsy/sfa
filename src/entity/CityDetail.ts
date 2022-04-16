@@ -20,23 +20,23 @@ import { Region } from "./Region";
 @Entity("city_detail")
 export class City extends AbstractModel {
   @Column()
-  city: string;
+  city!: string;
 
   @Column()
-  subCity: string;
+  subCity!: string;
 
   @Column()
-  specificArea: string;
+  specificArea!: string;
 
   @ManyToOne(() => User, (user) => user.cities)
-  created_by: User;
+  created_by!: User;
 
   @ManyToOne(() => Nation, (nation) => nation.cities)
-  nation_id: Nation;
+  nation_id!: Nation;
 
   @OneToMany(() => Outlet, (outlet) => outlet.city_id)
-  outlets: Outlet[];
+  outlets!: Outlet[];
 
   @ManyToOne(() => Region, (region) => region.cities)
-  region_id: Region;
+  region_id!: Region;
 }

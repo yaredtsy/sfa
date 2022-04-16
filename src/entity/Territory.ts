@@ -18,17 +18,17 @@ import { Truck } from "./Truck";
 @Entity("territory")
 export class Territory extends AbstractModel {
   @Column({ length: 8 })
-  territoryCode: string;
+  territoryCode!: string;
 
   @Column()
-  territoryName: string;
+  territoryName!: string;
 
   @ManyToOne(() => User, (user) => user.territories)
-  created_by: User;
+  created_by!: User;
 
   @ManyToOne(() => Region, (region) => region.territories)
-  region_id: Region;
+  region_id!: Region;
 
   @OneToMany(() => Truck, (truck) => truck.territory_id)
-  trucks: Truck[];
+  trucks!: Truck[];
 }

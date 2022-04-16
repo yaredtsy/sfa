@@ -1,5 +1,13 @@
 import { Router } from "express";
-import {GetUser,GetAllUser,DeleteUser,CreateUser,Login,UpdateUser,forgetPassword} from 'controller/UserController';
+import {
+  GetUser,
+  GetAllUser,
+  DeleteUser,
+  CreateUser,
+  Login,
+  UpdateUser,
+  forgetPassword,
+} from "controller/UserController";
 
 const router = Router();
 
@@ -9,7 +17,7 @@ const router = Router();
  * @desc returns all users
  * @params null
  * @response [User]
-*/
+ */
 router.get("/", GetAllUser);
 
 /*
@@ -28,7 +36,7 @@ router.get("/:id", GetUser);
  * @params null
  * @req User
  * @res User
- * 
+ *
  */
 router.post("/", CreateUser);
 
@@ -37,8 +45,8 @@ router.post("/", CreateUser);
  * @url /api/v1.0/users/:id
  * @desc update user
  * @params user id
- * 
- * 
+ *
+ *
  */
 router.patch("/:id", UpdateUser);
 
@@ -47,19 +55,19 @@ router.patch("/:id", UpdateUser);
  * @url /api/v1.0/users/:id
  * @desc delete user
  * @params user id
- * 
- * 
+ *
+ *
  */
 
-router.delete("/:id",DeleteUser);
+router.delete("/:id", DeleteUser);
 
 /*
  * @method POST
  * @url /api/v1.0/users/login
  * @desc update user
  * @params null
- * 
- * 
+ *
+ *
  */
 
 router.post("/login", Login);
@@ -69,8 +77,8 @@ router.post("/login", Login);
  * @url /api/v1.0/users/forget-password
  * @desc reset password
  * @params null
- * 
- * 
+ *
+ *
  */
 
 router.post("/forget-password", forgetPassword);
