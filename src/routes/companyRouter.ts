@@ -11,19 +11,49 @@ import isAuthenticated from "Middleware/isAuthenticated";
 
 const router = Router();
 
-// CREATE/POST
+/*
+ * @method POST
+ * @url /api/v1.0/companies/
+ * @desc create companies
+ * @params
+ *
+ */
 router.post("/", isAuthenticated, CreateCompany);
 
-// GET ALL
+/*
+ * @method GET
+ * @url /api/v1.0/companies/
+ * @desc get all company
+ * @params
+ *
+ */
 router.get("/", isAuthenticated, GetAllCompany);
 
-// GET ONE
+/*
+ * @method GET
+ * @url /api/v1.0/companies/:id
+ * @desc get one company
+ * @params company id
+ *
+ */
 router.get("/:id", isAuthenticated, GetOneCompany);
 
-// PATCH
+/*
+ * @method POST
+ * @url /api/v1.0/companies/:id
+ * @desc update companies
+ * @params company id
+ *
+ */
 router.patch("/:id", isAuthenticated, UpdateCompany);
 
-// DELETE
+/*
+ * @method POST
+ * @url /api/v1.0/companies/Lid
+ * @desc delete companies
+ * @params company id
+ *
+ */
 router.delete("/:id", isAuthenticated, DeleteCompany);
 
 export default router;

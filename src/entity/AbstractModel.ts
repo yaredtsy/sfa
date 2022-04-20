@@ -1,12 +1,10 @@
 import {
-  Entity,
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { User } from "./User";
 
 export default class AbstractModel extends BaseEntity {
   @PrimaryGeneratedColumn()

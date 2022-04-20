@@ -5,7 +5,7 @@ import app from "../app";
 const request = supertest(app);
 const url = "/api/v1.0/trucks";
 
-let token;
+let token:string;
 
 beforeAll(async () => {
   const valid = () => {

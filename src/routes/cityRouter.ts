@@ -11,19 +11,49 @@ import isAuthenticated from "Middleware/isAuthenticated";
 
 const router = Router();
 
-// CREATE/POST
+/*
+ * @method POST
+ * @url /api/v1.0/cities/
+ * @desc create cities
+ * @params
+ *
+ */
 router.post("/", isAuthenticated, CreateCity);
 
-// GET ALL
+/*
+ * @method GET
+ * @url /api/v1.0/cities/
+ * @desc get cities
+ * @params
+ *
+ */
 router.get("/", isAuthenticated, GetAllCity);
 
-// GET ONE
+/*
+ * @method GET
+ * @url /api/v1.0/cities/:id
+ * @desc Get one cities
+ * @params cities id
+ *
+ */
 router.get("/:id", isAuthenticated, GetOneCity);
 
-// PATCH
+/*
+ * @method PATCH
+ * @url /api/v1.0/cities/:id
+ * @desc get one cities
+ * @params cities id
+ *
+ */
 router.patch("/:id", isAuthenticated, UpdateCity);
 
-// DELETE
+/*
+ * @method DELETE
+ * @url /api/v1.0/cities/
+ * @desc delete cities
+ * @params cities id
+ *
+ */
 router.delete("/:id", isAuthenticated, DeleteCity);
 
 export default router;

@@ -10,19 +10,49 @@ import isAuthenticated from "Middleware/isAuthenticated";
 
 const router = Router();
 
-// CREATE/POST
+/*
+ * @method POST
+ * @url /api/v1.0/invoices/
+ * @desc create invoices
+ * @params
+ *
+ */
 router.post("/", isAuthenticated, CreateInvoice);
 
-// GET ALL
+/*
+ * @method GET
+ * @url /api/v1.0/invoices/
+ * @desc Get all invoices
+ * @params
+ *
+ */
 router.get("/", isAuthenticated, GetAllInvoice);
 
-// GET ONE
+/*
+ * @method GET
+ * @url /api/v1.0/invoices/:id
+ * @desc get one invoices
+ * @params invoices id
+ *
+ */
 router.get("/:id", isAuthenticated, GetOneInvoice);
 
-// PATCH
+/*
+ * @method PATCH
+ * @url /api/v1.0/invoices/:id
+ * @desc update invoices
+ * @params invoices id
+ *
+ */
 router.patch("/:id", isAuthenticated, UpdateInvoice);
 
-// DELETE
+/*
+ * @method DELETE
+ * @url /api/v1.0/invoices/:id
+ * @desc delete invoices
+ * @params invoices id
+ *
+ */
 router.delete("/:id", isAuthenticated, DeleteInvoice);
 
 export default router;

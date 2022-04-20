@@ -13,19 +13,53 @@ import isAuthenticated from "Middleware/isAuthenticated";
 const router = Router();
 
 
-// CREATE/POST
+/*
+ * @method POST
+ * @url /api/v1.0/channels/
+ * @desc create channels
+ * @params
+ *
+ */
 router.post("/", isAuthenticated, CreateChannel);
 
-// GET ALL
+
+/*
+ * @method GET
+ * @url /api/v1.0/channels/
+ * @desc get all channels
+ * @params
+ *
+ */
 router.get("/", isAuthenticated, GetAllChannel);
 
-// GET ONE
+
+/*
+ * @method GET
+ * @url /api/v1.0/channels/:id
+ * @desc get one channels
+ * @params channel id
+ *
+ */
 router.get("/:id", isAuthenticated, GetOneChannel);
 
-// PATCH
+
+/*
+ * @method PATCH
+ * @url /api/v1.0/channels/:id
+ * @desc update channels
+ * @params channel id
+ *
+ */
 router.patch("/:id", isAuthenticated, UpdateChannel);
 
-// DELETE
+
+/*
+ * @method DELETE
+ * @url /api/v1.0/channels/:id
+ * @desc delete channels
+ * @params channel id
+ *
+ */
 router.delete("/:id", isAuthenticated, DeleteChannel);
 
 export default router;

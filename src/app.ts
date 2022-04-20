@@ -2,6 +2,9 @@ import express from "express";
 import "reflect-metadata";
 
 import {} from "config/connection";
+import errorHandler from 'Middleware/errors/error-handler';
+import routeNotFound from 'Middleware/errors/notFoundError';
+
 import { swaggerSpec, swaggerUi } from "config/swagger";
 //
 
@@ -41,5 +44,8 @@ app.use("/api/v1.0/route-markets", routeMarketRouter);
 app.use("/api/v1.0/invoices", invoiceRouter);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use(errorHandler)
+app.use(routeNotFound)
 
 export default app;

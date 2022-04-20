@@ -1,4 +1,6 @@
 import supertest from "supertest";
+import express from 'express'
+
 import { response, Response } from "express";
 import { createConnection } from "typeorm";
 import app from "../app";
@@ -101,7 +103,7 @@ describe("User Route", () => {
       return expect(response.status).toBe(200);
     });
     it("should return object relative to the id", (done) => {
-      request.get("/api/v1.0/users").then((response) => {
+      request.get("/api/v1.0/users").then((response: any) => {
         expect(response.body).toMatchObject({});
         done();
       });
@@ -110,21 +112,21 @@ describe("User Route", () => {
 
   describe("User GET by id", () => {
     it("should return status code 200", (done) => {
-      request.get("/api/v1.0/users/1").then((response) => {
+      request.get("/api/v1.0/users/1").then((response:express.Response) => {
         expect(response.status).toBe(200);
         done();
       });
     });
 
     it("should return object relative to the id", (done) => {
-      request.get("/api/v1.0/users/1").then((response) => {
+      request.get("/api/v1.0/users/1").then((response:any) => {
         expect(response.body).toMatchObject({});
         done();
       });
     });
 
     it("should return status code 404 for bad id", (done) => {
-      request.get("/api/v1.0/users/111").then((response) => {
+      request.get("/api/v1.0/users/111").then((response:express.Response) => {
         expect(response.status).toBe(404);
         done();
       });
@@ -138,21 +140,21 @@ describe("User Route", () => {
         .send({
           middleName: "Updated",
         })
-        .then((response) => {
+        .then((response:any) => {
           expect(response.status).toBe(200);
           done();
         });
     });
 
     it("should return object relative to the id", (done) => {
-      request.patch("/api/v1.0/users/1").then((response) => {
+      request.patch("/api/v1.0/users/1").then((response:any) => {
         expect(response.body).toMatchObject({});
         done();
       });
     });
 
     it("should return status code 404 for bad id", (done) => {
-      request.patch("/api/v1.0/users/111").then((response) => {
+      request.patch("/api/v1.0/users/111").then((response:express.Response) => {
         expect(response.status).toBe(404);
         done();
       });

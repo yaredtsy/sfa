@@ -12,19 +12,49 @@ import isAuthenticated from "Middleware/isAuthenticated";
 
 const router = Router();
 
-// CREATE/POST
+/*
+ * @method POST
+ * @url /api/v1.0/materials/
+ * @desc create material
+ * @params
+ *
+ */
 router.post("/", isAuthenticated, CreateMaterial);
 
-// GET ALL
+/*
+ * @method GET
+ * @url /api/v1.0/materials/
+ * @desc get all material
+ * @params
+ *
+ */
 router.get("/", isAuthenticated,GetAllMaterial);
 
-// GET ONE
+/*
+ * @method GET
+ * @url /api/v1.0/materials/:id
+ * @desc get one material
+ * @params
+ *
+ */
 router.get("/:id", isAuthenticated, GetOneMaterial);
 
-// PATCH
+/*
+ * @method PATCH
+ * @url /api/v1.0/materials/:id
+ * @desc update material
+ * @params
+ *
+ */
 router.patch("/:id", isAuthenticated, UpdateMaterial);
 
-// DELETE
+/*
+ * @method DELETE
+ * @url /api/v1.0/materials/:id
+ * @desc delete material
+ * @params
+ *
+ */
 router.delete("/:id", isAuthenticated,DeleteMaterial);
 
 export default router;
