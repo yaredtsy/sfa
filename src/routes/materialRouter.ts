@@ -7,8 +7,9 @@ import {
   UpdateMaterial,
   DeleteMaterial
 } from "controller/materialController";
-
+import { MaterialSchema } from 'Middleware/validation/schema';
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, CreateMaterial);
+router.post("/",MaterialSchema,validateRequestSchema, isAuthenticated, CreateMaterial);
 
 /*
  * @method GET

@@ -8,6 +8,8 @@ import {
   UpdateUser,
   forgetPassword,
 } from "controller/UserController";
+import {RegistrationSchema} from 'Middleware/validation/schema';
+import { validateRequestSchema } from 'Middleware/validation/validate-request-schema';
 
 const router = Router();
 
@@ -38,7 +40,7 @@ router.get("/:id", GetUser);
  * @res User
  *
  */
-router.post("/", CreateUser);
+router.post("/",RegistrationSchema ,validateRequestSchema,CreateUser);
 
 /*
  * @method PATCH

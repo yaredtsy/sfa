@@ -8,6 +8,8 @@ import {
 } from "controller/nationalController";
 
 import isAuthenticated from "Middleware/isAuthenticated";
+import { NationalSchema } from "Middleware/validation/schema";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 // for test purpose
@@ -19,7 +21,13 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, createNation);
+router.post(
+  "/",
+  NationalSchema,
+  validateRequestSchema,
+  isAuthenticated,
+  createNation
+);
 
 /*
  * @method GET

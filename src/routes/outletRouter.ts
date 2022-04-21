@@ -7,8 +7,10 @@ import {
   GetOneOutlet,
   UpdateOutlet,
 } from "controller/outletController";
+import { OutletSchema } from "Middleware/validation/schema";
 
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -19,7 +21,13 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, CreateOutlet);
+router.post(
+  "/",
+  OutletSchema,
+  validateRequestSchema,
+  isAuthenticated,
+  CreateOutlet
+);
 
 /*
  * @method GET

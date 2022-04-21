@@ -1,4 +1,5 @@
 import { Router } from "express";
+import {RegionSchema} from 'Middleware/validation/schema'
 import {
   CreateRegion,
   GetAll,
@@ -7,6 +8,7 @@ import {
   DeleteRegion,
 } from "controller/regionController";
 import isAuthenticated from "../Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -17,7 +19,7 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, CreateRegion);
+router.post("/",RegionSchema, validateRequestSchema,isAuthenticated, CreateRegion);
 
 /*
  * @method GET

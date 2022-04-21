@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { RouteSchema } from "Middleware/validation/schema";
 import {
   CreateRouteMarket,
   GetAll,
@@ -7,6 +8,7 @@ import {
   Delete,
 } from "controller/routeMarketController";
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -17,7 +19,13 @@ const router = Router();
  * @params null
  * @response [User]
  */
-router.post("/", isAuthenticated, CreateRouteMarket);
+router.post(
+  "/",
+  RouteSchema,
+  validateRequestSchema,
+  isAuthenticated,
+  CreateRouteMarket
+);
 
 /*
  * @method GET

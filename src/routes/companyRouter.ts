@@ -7,7 +7,9 @@ import {
   UpdateCompany,
   DeleteCompany,
 } from "controller/companyController";
+import { CompanySchema } from "Middleware/validation/schema";
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -18,7 +20,13 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, CreateCompany);
+router.post(
+  "/",
+  CompanySchema,
+  validateRequestSchema,
+  isAuthenticated,
+  CreateCompany
+);
 
 /*
  * @method GET

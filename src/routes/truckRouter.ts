@@ -1,4 +1,8 @@
 import { Router } from "express";
+
+import {TruckSchema} from 'Middleware/validation/schema'
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
+
 import {
   CreateTruck,
   GetUser,
@@ -17,7 +21,7 @@ const router = Router();
  * @params null
  * @response [User]
  */
-router.post("/", isAuthenticated, CreateTruck);
+router.post("/", TruckSchema,validateRequestSchema,isAuthenticated, CreateTruck);
 
 /*
  * @method GET

@@ -1,4 +1,6 @@
 import { Router } from "express";
+
+import {TerritorySchema} from 'Middleware/validation/schema'
 import {
   CreateTerritory,
   GetAllTerritories,
@@ -7,6 +9,7 @@ import {
   DeleteTerritory,
 } from "controller/territoryController";
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -17,7 +20,7 @@ const router = Router();
  * @params territory id
  *
  */
-router.post("/", isAuthenticated, CreateTerritory);
+router.post("/", TerritorySchema,validateRequestSchema,isAuthenticated, CreateTerritory);
 
 /*
  * @method GET

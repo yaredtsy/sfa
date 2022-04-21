@@ -4,10 +4,11 @@ import {
   GetAllCity,
   GetOneCity,
   UpdateCity,
-  DeleteCity
-} from 'controller/CityController';
-
+  DeleteCity,
+} from "controller/CityController";
+import { CitySchema } from "Middleware/validation/schema";
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -18,7 +19,13 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, CreateCity);
+router.post(
+  "/",
+  CitySchema,
+  validateRequestSchema,
+  isAuthenticated,
+  CreateCity
+);
 
 /*
  * @method GET

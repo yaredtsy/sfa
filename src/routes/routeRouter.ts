@@ -1,4 +1,7 @@
 import { Router } from "express";
+
+import {RouteSchema} from 'Middleware/validation/schema'
+
 import {
   Create,
   AddPolygon,
@@ -8,6 +11,7 @@ import {
   Delete,
 } from "controller/routerController";
 import isAuthenticated from "Middleware/isAuthenticated";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
 
@@ -18,7 +22,7 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, Create);
+router.post("/",RouteSchema, validateRequestSchema,isAuthenticated, Create);
 
 /*
  * @method POST

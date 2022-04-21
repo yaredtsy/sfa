@@ -8,6 +8,9 @@ import {
 } from "controller/invoiceController";
 import isAuthenticated from "Middleware/isAuthenticated";
 
+import {InvoiceSchema} from 'Middleware/validation/schema'
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
+
 const router = Router();
 
 /*
@@ -17,7 +20,7 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated, CreateInvoice);
+router.post("/", InvoiceSchema,validateRequestSchema,isAuthenticated, CreateInvoice);
 
 /*
  * @method GET

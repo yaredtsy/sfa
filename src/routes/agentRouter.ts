@@ -1,10 +1,17 @@
 import { Router } from "express";
+import { AgentSchema } from "Middleware/validation/schema";
 
 import isAuthenticated from "Middleware/isAuthenticated";
-import {createAgent,getAllAgent,getAgent,updateAgent,deleteAgent} from "controller/agentController";
+import {
+  createAgent,
+  getAllAgent,
+  getAgent,
+  updateAgent,
+  deleteAgent,
+} from "controller/agentController";
+import { validateRequestSchema } from "Middleware/validation/validate-request-schema";
 
 const router = Router();
-
 
 /*
  * @method POST
@@ -13,8 +20,13 @@ const router = Router();
  * @params
  *
  */
-router.post("/", isAuthenticated,createAgent);
-
+router.post(
+  "/",
+  AgentSchema,
+  validateRequestSchema,
+  isAuthenticated,
+  createAgent
+);
 
 /*
  * @method GET
@@ -25,7 +37,6 @@ router.post("/", isAuthenticated,createAgent);
  */
 router.get("/", isAuthenticated, getAllAgent);
 
-
 /*
  * @method GET
  * @url /api/v1.0/agents/:id
@@ -35,7 +46,6 @@ router.get("/", isAuthenticated, getAllAgent);
  */
 router.get("/:id", isAuthenticated, getAgent);
 
-
 /*
  * @method PATCH
  * @url /api/v1.0/agents/:id
@@ -44,7 +54,6 @@ router.get("/:id", isAuthenticated, getAgent);
  *
  */
 router.patch("/:id", isAuthenticated, updateAgent);
-
 
 /*
  * @method DELETE

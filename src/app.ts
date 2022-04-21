@@ -1,7 +1,7 @@
 import express from "express";
 import "reflect-metadata";
 
-import {} from "config/connection";
+// import {} from "config/connection";
 import errorHandler from 'Middleware/errors/error-handler';
 import routeNotFound from 'Middleware/errors/notFoundError';
 
