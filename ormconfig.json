@@ -1,8 +1,8 @@
 {
    "type": "postgres",
-   "host": "db",
-   "username": "sfa",
-   "password": "SFA_DB_123",
+   "host": "localhost",
+   "username": "postgres",
+   "password": "root",
    "database": "sfa",
    "synchronize": true,
    "logging": false,

@@ -2,11 +2,13 @@
    "name": "new-typeorm-project",
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
+   "main": "src/index.ts",
    "devDependencies": {
+      "@tsconfig/node16": "^1.0.2",
       "@types/bcrypt": "^5.0.0",
       "@types/cors": "^2.8.12",
       "@types/jest": "^27.4.1",
-      "@types/node": "^8.0.29",
+      "@types/node": "^8.10.66",
       "@types/passport-jwt": "^3.0.6",
       "@types/supertest": "^2.0.12",
       "@typescript-eslint/eslint-plugin": "^5.19.0",
@@ -16,7 +18,6 @@
       "eslint-config-airbnb-typescript": "^17.0.0",
       "eslint-config-prettier": "^8.5.0",
       "eslint-plugin-import": "^2.26.0",
-      "eslint-plugin-jsx-a11y": "^6.5.1",
       "eslint-plugin-prettier": "^4.0.0",
       "eslint-plugin-react": "^7.29.4",
       "jest": "^27.5.1",
@@ -24,8 +25,8 @@
       "prettier": "2.6.2",
       "supertest": "^6.2.2",
       "ts-jest": "^27.1.4",
-      "ts-node": "3.3.0",
-      "typescript": "3.3.3333"
+      "ts-node": "^3.3.0",
+      "typescript": "^3.3.3333"
    },
    "dependencies": {
       "@types/express": "^4.17.13",
@@ -33,6 +34,7 @@
       "compression": "^1.7.4",
       "cookie-parser": "^1.4.6",
       "cors": "^2.8.5",
+      "cross-env": "^7.0.3",
       "eslint-config-airbnb": "^19.0.4",
       "eslint-import-resolver-typescript": "^2.7.1",
       "express": "^4.17.3",
@@ -51,11 +53,11 @@
       "typeorm": "0.2.41"
    },
    "scripts": {
-      "start": "ts-node src/index.ts",
+      "start": "nodemon src/index.ts",
       "seed": "ts-node seed.ts",
-      "dev": "nodemon --watch --exec ts-node src/index.ts",
+      "dev": "cross-env NODE_PATH=./src nodemon  src/index.ts",
       "migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migrationName -p",
-      "coverage": "jest --coverage",
+      "coverage": "cross-env NODE_PATH=./src jest --coverage",
       "test": "jest --watchAll",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
       "lint": "eslint src --ext .js,.jsx,.ts,.tsx .",

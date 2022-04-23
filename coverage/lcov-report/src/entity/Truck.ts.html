@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/22</span>
+                <span class='fraction'>28/28</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/16</span>
+                <span class='fraction'>21/21</span>
             </div>
         
             
@@ -90,59 +90,80 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">181x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">181x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">100x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">181x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">100x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">181x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">100x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, ManyToMany, ManyToOne, UpdateDateColumn, OneToMany} from "typeorm";
+<span class="cline-any cline-yes">181x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Entity, Column, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./User";
-import AbstractModel from './AbstractModel'
+import AbstractModel from "./AbstractModel";
 import { Territory } from "./Territory";
 import { Route } from "./Route";
+import { RouteMarket } from "./RouteMarket";
+import { Invoice } from "./Invoice";
 &nbsp;
 @Entity("truck")
 export class Truck extends AbstractModel {
+  @Column({ length: 9 })
+  truckCode!: string;
 &nbsp;
-    @Column({length: 9})
-    truckCode: string
+  @Column()
+  truckName!: string;
 &nbsp;
-    @Column()
-    truckName: string;
+  @Column({ length: 7 })
+  plateNumber!: string;
 &nbsp;
-    @Column({length: 7})
-    plateNumber: string;
+  @ManyToOne(() =&gt; User, (user) =&gt; user.trucks)
+  created_by!: User;
 &nbsp;
-    @ManyToOne(()=&gt; User, user =&gt; user.trucks)
-    created_by: User
+  @ManyToOne(() =&gt; Territory, (territory) =&gt; territory.trucks)
+  territory_id!: Territory;
 &nbsp;
-    @ManyToOne(()=&gt; Territory, territory =&gt; territory.trucks)
-    territory_id: Territory
+  @OneToMany(() =&gt; Route, (route) =&gt; route.truck_id)
+  routes!: Route;
 &nbsp;
-    @OneToMany(()=&gt; Route, route =&gt; route.truck_id)
-    routes: Route
+  @OneToMany(() =&gt; RouteMarket, (routeMarket) =&gt; routeMarket.truck_id)
+  routeMarkets!: RouteMarket[];
+&nbsp;
+  @OneToMany(() =&gt; Invoice, (invoice) =&gt; invoice.truck_id)
+  invoices!: Invoice[];
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -150,10 +171,9 @@ export class Truck extends AbstractModel {
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener">istanbul</a>
-                at Sat Dec 18 2021 10:22:33 GMT+0300 (East Africa Time)
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at Sat Apr 23 2022 18:23:26 GMT+0300 (East Africa Time)
             </div>
-        </div>
         <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {

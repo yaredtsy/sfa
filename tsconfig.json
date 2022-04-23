@@ -1,14 +1,17 @@
 {
    "compilerOptions": {
       "lib": [
-         "es5",
-         "es6"
-      ],
-      "target": "es5",
-      "module": "esnext",
+         
+         "es2015"   
+         ],
+
+      "module": "commonjs",
       "moduleResolution": "node",
+  
+      "target": "es6",
+    
       "baseUrl": "src",
-      "outDir": "./build",
+      "outDir": "build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
@@ -23,8 +26,12 @@
      
       "resolveJsonModule": true,
       "isolatedModules": true,
-      "noEmit": true,
+      "noEmit": true
+   
    },
-   "include": ["src/**/*.js", "src/**/*.ts", "src/utils/*"]
+   "include": [
+      "src"
+    ]
+
 
 }

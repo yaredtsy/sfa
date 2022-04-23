@@ -57,7 +57,7 @@ export async function seed(connection: Connection) {
     .create({
       companyCode: "UB",
       companyName: "United Beverage",
-      city: "Addis Ababa",
+      // city: "Addis Ababa",
       address: "Nifas Silk Lafto",
       numberOfAgents: 70,
       created_by: user,
